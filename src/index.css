@@ -307,6 +307,9 @@ button, input, select {
     font-size: 0.55rem !important;
     padding: 1px 4px !important;
   }
+  .container {
+    padding: 0 12px !important;
+  }
 }
 
 
