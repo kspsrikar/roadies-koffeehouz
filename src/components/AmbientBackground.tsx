@@ -75,7 +75,7 @@ export const AmbientBackground: React.FC = () => {
       zIndex: 0,
       pointerEvents: 'none',
       overflow: 'hidden',
-      backgroundColor: '#0a0a0a'
+      backgroundColor: '#131317'
     }}>
       {/* Background Media Layers */}
       {mediaList.map((item, idx) => {
@@ -143,7 +143,7 @@ export const AmbientBackground: React.FC = () => {
       <div style={{
         position: 'absolute',
         inset: 0,
-        background: 'radial-gradient(circle at center, rgba(10, 10, 10, 0.4) 0%, rgba(5, 5, 5, 0.85) 100%)',
+        background: 'radial-gradient(circle at center, rgba(19, 19, 23, 0.2) 0%, rgba(19, 19, 23, 0.78) 100%)',
         backdropFilter: 'blur(20px) saturate(140%)',
         zIndex: 3
       }} />

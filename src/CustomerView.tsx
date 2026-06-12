@@ -37,6 +37,7 @@ import type {
 import { ContainerScroll } from './components/ui/container-scroll-animation';
 import { Carousel, TestimonialCard } from './components/ui/retro-testimonial';
 import { AmbientBackground } from './components/AmbientBackground';
+import { TextScramble } from './components/ui/text-scramble';
 
 interface CustomerViewProps {
   initialTable?: string;
@@ -691,8 +692,111 @@ export const CustomerView: React.FC<CustomerViewProps> = ({ initialTable }) => {
         </div>
       </header>
 
+      {/* Immersive Hero Landing Section */}
+      <section style={{
+        height: 'calc(100vh - 80px)',
+        minHeight: '520px',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        position: 'relative',
+        zIndex: 10,
+        textAlign: 'center',
+        padding: '20px',
+        color: '#ffffff'
+      }}>
+        <div style={{
+          position: 'absolute',
+          inset: 0,
+          background: 'linear-gradient(to bottom, rgba(19, 19, 23, 0.1) 0%, rgba(19, 19, 23, 0.55) 100%)',
+          pointerEvents: 'none',
+          zIndex: -1
+        }} />
+
+        <span style={{
+          fontSize: '0.72rem',
+          letterSpacing: '6px',
+          textTransform: 'uppercase',
+          color: 'var(--text-secondary)',
+          fontWeight: 700,
+          marginBottom: '12px',
+          opacity: 0.85
+        }}>
+          AUTHENTIC BIKE CAFE & COFFEE
+        </span>
+
+        <h1 style={{
+          fontSize: 'clamp(3rem, 10vw, 5rem)',
+          fontWeight: 900,
+          lineHeight: '1.05',
+          letterSpacing: '6px',
+          margin: '0 0 12px 0',
+          fontFamily: 'var(--font-serif)',
+          textTransform: 'uppercase',
+          textShadow: '0 0 40px rgba(255, 255, 255, 0.45), 0 0 10px rgba(255, 255, 255, 0.2)'
+        }}>
+          <TextScramble duration={1.6} characterSet="ABCDEFGHIJKLMNOPQRSTUVWXYZ">
+            ROADIES
+          </TextScramble>
+        </h1>
+
+        <div style={{
+          fontSize: '0.78rem',
+          letterSpacing: '8px',
+          color: '#ffffff',
+          opacity: 0.6,
+          textTransform: 'uppercase',
+          fontWeight: 600,
+          marginBottom: '18px'
+        }}>
+          रोडीज़ | ਰੋਡੀਜ਼
+        </div>
+
+        <p style={{
+          fontFamily: 'var(--font-serif)',
+          fontStyle: 'italic',
+          fontSize: '1.25rem',
+          color: 'var(--text-primary)',
+          opacity: 0.95,
+          margin: '0 0 20px 0',
+          letterSpacing: '1px'
+        }}>
+          The Art of Coffee & Rides
+        </p>
+
+        <span style={{
+          fontSize: '0.6rem',
+          letterSpacing: '4px',
+          color: 'var(--text-muted)',
+          textTransform: 'uppercase',
+          fontWeight: 700,
+          display: 'block',
+          marginBottom: '42px'
+        }}>
+          VIBE • COMMUNITY • CRAFT
+        </span>
+
+        <button
+          onClick={() => {
+            document.getElementById('menu-section')?.scrollIntoView({ behavior: 'smooth' });
+          }}
+          className="btn btn-primary animate-pulse"
+          style={{
+            padding: '16px 44px',
+            fontSize: '0.92rem',
+            borderRadius: 'var(--radius-full)',
+            letterSpacing: '2px',
+            fontWeight: 800,
+            boxShadow: '0 0 22px rgba(255, 255, 255, 0.5), 0 0 8px rgba(255, 255, 255, 0.2)'
+          }}
+        >
+          GO TO MENU
+        </button>
+      </section>
+
       {/* Main Content Area */}
-      <main className="container" style={{ flex: 1, padding: '24px 20px', paddingBottom: '100px', position: 'relative', zIndex: 10 }}>
+      <main id="menu-section" className="container" style={{ flex: 1, padding: '24px 20px', paddingBottom: '100px', position: 'relative', zIndex: 10 }}>
 
         {/* Placed Order Status banner */}
         {placedOrder && isShowingActiveOrder && (
@@ -848,12 +952,13 @@ export const CustomerView: React.FC<CustomerViewProps> = ({ initialTable }) => {
                   borderRadius: 'var(--radius-full)',
                   backgroundColor: isActive ? '#ffffff' : 'var(--bg-card)',
                   color: isActive ? '#000000' : 'var(--text-primary)',
-                  fontWeight: 600,
+                  fontWeight: isActive ? 700 : 600,
                   fontSize: '0.85rem',
                   whiteSpace: 'nowrap',
                   cursor: 'pointer',
                   border: isActive ? 'none' : '1px solid var(--border-color)',
-                  transition: 'all 0.2s ease'
+                  boxShadow: isActive ? '0 0 15px rgba(255, 255, 255, 0.45), 0 2px 6px rgba(0, 0, 0, 0.4)' : 'none',
+                  transition: 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)'
                 }}
               >
                 {cat.label}

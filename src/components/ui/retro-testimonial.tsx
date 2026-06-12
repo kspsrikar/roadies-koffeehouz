@@ -146,18 +146,18 @@ const Carousel = ({ items, initialScroll = 0 }: iCarouselProps) => {
       </div>
       <div className="flex justify-center md:justify-end gap-3 mt-4 px-4">
         <button
-          className="h-12 w-12 rounded-full bg-[#f59e0b]/10 border border-[#f59e0b]/30 flex items-center justify-center disabled:opacity-30 hover:bg-[#f59e0b]/25 transition-all duration-200 cursor-pointer"
+          className="h-12 w-12 rounded-full bg-white/10 border border-white/20 flex items-center justify-center disabled:opacity-30 hover:bg-white/25 hover:border-white/40 transition-all duration-200 cursor-pointer shadow-[0_0_10px_rgba(255,255,255,0.05)]"
           onClick={handleScrollLeft}
           disabled={!canScrollLeft}
         >
-          <ArrowLeft className="h-6 w-6 text-[#f59e0b]" />
+          <ArrowLeft className="h-6 w-6 text-white" />
         </button>
         <button
-          className="h-12 w-12 rounded-full bg-[#f59e0b]/10 border border-[#f59e0b]/30 flex items-center justify-center disabled:opacity-30 hover:bg-[#f59e0b]/25 transition-all duration-200 cursor-pointer"
+          className="h-12 w-12 rounded-full bg-white/10 border border-white/20 flex items-center justify-center disabled:opacity-30 hover:bg-white/25 hover:border-white/40 transition-all duration-200 cursor-pointer shadow-[0_0_10px_rgba(255,255,255,0.05)]"
           onClick={handleScrollRight}
           disabled={!canScrollRight}
         >
-          <ArrowRight className="h-6 w-6 text-[#f59e0b]" />
+          <ArrowRight className="h-6 w-6 text-white" />
         </button>
       </div>
     </div>
@@ -231,7 +231,7 @@ const TestimonialCard = ({
 
   // Categories styling mapping
   const badgeColors: Record<string, string> = {
-    coffee: "rgba(245, 158, 11, 0.15)",
+    coffee: "rgba(255, 255, 255, 0.15)",
     drinks: "rgba(59, 130, 246, 0.15)",
     pizza: "rgba(239, 68, 68, 0.15)",
     pasta: "rgba(16, 185, 129, 0.15)",
@@ -240,7 +240,7 @@ const TestimonialCard = ({
   };
 
   const textColors: Record<string, string> = {
-    coffee: "#f59e0b",
+    coffee: "#ffffff",
     drinks: "#3b82f6",
     pizza: "#ef4444",
     pasta: "#10b981",
@@ -268,10 +268,10 @@ const TestimonialCard = ({
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               ref={containerRef}
-              className="max-w-2xl w-full bg-[#1c1c1f] border border-[#27272a] h-auto max-h-[85vh] overflow-y-auto z-[60] p-6 md:p-8 rounded-3xl relative text-left shadow-2xl"
+              className="max-w-2xl w-full bg-[var(--bg-card)] border border-[var(--border-color)] h-auto max-h-[85vh] overflow-y-auto z-[60] p-6 md:p-8 rounded-3xl relative text-left shadow-2xl"
             >
               <button
-                className="absolute top-4 right-4 h-9 w-9 rounded-full flex items-center justify-center bg-[#27272a] hover:bg-[#3f3f46] transition-colors cursor-pointer"
+                className="absolute top-4 right-4 h-9 w-9 rounded-full flex items-center justify-center bg-[var(--border-color)] hover:bg-[var(--bg-card-hover)] transition-colors cursor-pointer"
                 onClick={handleCollapse}
               >
                 <X className="h-5 w-5 text-white" />
@@ -387,13 +387,14 @@ const TestimonialCard = ({
         <div
           style={{
             border: `1px solid var(--border-color)`,
-            boxShadow: `0 8px 30px rgba(0,0,0,0.3)`,
+            boxShadow: `0 10px 30px rgba(0,0,0,0.35)`,
             paddingTop: "24px",
             paddingBottom: "24px",
             paddingLeft: "24px",
             paddingRight: "24px",
+            transition: "all var(--transition-normal)"
           }}
-          className="rounded-3xl bg-[#1c1c1f] h-[480px] w-72 md:w-80 overflow-hidden flex flex-col items-center justify-between relative z-10"
+          className="rounded-3xl bg-[var(--bg-card)] hover:bg-[var(--bg-card-hover)] hover:border-[var(--border-focus)] hover:shadow-[0_0_20px_rgba(255,255,255,0.06),_0_10px_30px_rgba(0,0,0,0.4)] h-[480px] w-72 md:w-80 overflow-hidden flex flex-col items-center justify-between relative z-10"
         >
           {/* Subtle textured grid overlay */}
           <div className="absolute inset-0 opacity-[0.03] pointer-events-none rounded-3xl" 
