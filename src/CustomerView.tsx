@@ -409,8 +409,13 @@ export const CustomerView: React.FC<CustomerViewProps> = ({ initialTable }) => {
             <input
               id="table-number-input"
               type="text"
+              pattern="[0-9]*"
+              inputMode="numeric"
               required
               placeholder="e.g. 1, 2, 3..."
+              onChange={(e) => {
+                e.target.value = e.target.value.replace(/\D/g, '');
+              }}
               style={{
                 width: '100%',
                 backgroundColor: 'var(--bg-card)',
@@ -484,6 +489,9 @@ export const CustomerView: React.FC<CustomerViewProps> = ({ initialTable }) => {
               type="text"
               required
               placeholder="e.g. Rahul, Priya"
+              onChange={(e) => {
+                e.target.value = e.target.value.replace(/[^a-zA-Z\s]/g, '');
+              }}
               style={{
                 width: '100%',
                 backgroundColor: 'var(--bg-card)',
@@ -1307,9 +1315,11 @@ export const CustomerView: React.FC<CustomerViewProps> = ({ initialTable }) => {
                   ) : (
                     <input 
                       type="text" 
+                      pattern="[0-9]*"
+                      inputMode="numeric"
                       required 
                       value={tableNumber}
-                      onChange={(e) => setTableNumber(e.target.value)}
+                      onChange={(e) => setTableNumber(e.target.value.replace(/\D/g, ''))}
                       placeholder="e.g. 5"
                       style={{ 
                         width: '100%', 
