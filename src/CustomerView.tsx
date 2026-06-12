@@ -34,6 +34,7 @@ import type {
   SharedCartItem
 } from './db/db';
 import { ContainerScroll } from './components/ui/container-scroll-animation';
+import { Carousel, TestimonialCard } from './components/ui/retro-testimonial';
 
 interface CustomerViewProps {
   initialTable?: string;
@@ -821,138 +822,34 @@ export const CustomerView: React.FC<CustomerViewProps> = ({ initialTable }) => {
           })}
         </div>
 
-        {/* Menu Grid */}
-        <div style={{ 
-          display: 'grid', 
-          gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', 
-          gap: '20px' 
-        }}>
-          {filteredItems.map(item => (
-            <div 
-              key={item.id}
-              className="glass-panel"
-              style={{
-                borderRadius: 'var(--radius-lg)',
-                padding: '20px',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-                transition: 'transform 0.2s ease, border-color 0.2s ease',
-                cursor: 'default'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-4px)';
-                e.currentTarget.style.borderColor = 'rgba(245, 158, 11, 0.25)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.05)';
-              }}
-            >
-              {item.image && (
-                <div style={{ width: '100%', height: '160px', borderRadius: 'var(--radius-md)', overflow: 'hidden', marginBottom: '14px', border: '1px solid var(--border-color)' }}>
-                  <img src={item.image} alt={item.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                </div>
-              )}
-              <div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
-                  <h4 style={{ fontSize: '1.1rem', fontWeight: 600, margin: 0 }}>{item.name}</h4>
-                  {item.popular && (
-                    <span style={{ 
-                      fontSize: '0.65rem', 
-                      backgroundColor: 'rgba(245, 158, 11, 0.1)', 
-                      color: 'var(--primary)', 
-                      padding: '2px 8px', 
-                      borderRadius: 'var(--radius-full)',
-                      fontWeight: 700
-                    }}>POPULAR</span>
-                  )}
-                </div>
-                <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '16px' }}>{item.description}</p>
-              </div>
+        {/* Carousel Menu Layout */}
+        <div style={{ marginTop: '10px', marginBottom: '30px' }}>
+          <Carousel
+            items={filteredItems.map((item, idx) => {
+              const cartItem = cart.find(i => i.menuItem.id === item.id);
+              const testimonialItem = {
+                id: item.id,
+                name: item.name,
+                price: item.price,
+                category: item.category,
+                description: item.description,
+                profileImage: item.image || 'https://images.unsplash.com/photo-1541167760496-1628856ab772?w=500&auto=format&fit=crop',
+                popular: item.popular
+              };
 
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ fontSize: '1.2rem', fontWeight: 700, color: 'var(--primary)' }}>₹{item.price}</span>
-                {(() => {
-                  const cartItem = cart.find(i => i.menuItem.id === item.id);
-                  return cartItem ? (
-                    <div style={{ 
-                      display: 'flex', 
-                      alignItems: 'center', 
-                      backgroundColor: 'var(--primary)', 
-                      color: 'var(--bg-darkest)',
-                      borderRadius: 'var(--radius-full)',
-                      padding: '2px',
-                      border: '1px solid var(--primary)'
-                    }}>
-                      <button
-                        onClick={() => updateQuantity(item.id, -1)}
-                        style={{ 
-                          border: 'none', 
-                          background: 'none', 
-                          color: 'var(--bg-darkest)', 
-                          padding: '6px 10px', 
-                          cursor: 'pointer',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center'
-                        }}
-                      >
-                        <Minus size={14} />
-                      </button>
-                      <span style={{ fontWeight: 800, padding: '0 2px', minWidth: '18px', textAlign: 'center', fontSize: '0.9rem' }}>
-                        {cartItem.quantity}
-                      </span>
-                      <button
-                        onClick={() => updateQuantity(item.id, 1)}
-                        style={{ 
-                          border: 'none', 
-                          background: 'none', 
-                          color: 'var(--bg-darkest)', 
-                          padding: '6px 10px', 
-                          cursor: 'pointer',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center'
-                        }}
-                      >
-                        <Plus size={14} />
-                      </button>
-                    </div>
-                  ) : (
-                    <button
-                      onClick={() => addToCart(item)}
-                      style={{
-                        backgroundColor: 'var(--bg-card)',
-                        border: '1px solid var(--border-color)',
-                        color: 'var(--text-primary)',
-                        width: '36px',
-                        height: '36px',
-                        borderRadius: '50%',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        cursor: 'pointer',
-                        transition: 'all 0.2s ease'
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.backgroundColor = 'var(--primary)';
-                        e.currentTarget.style.color = 'var(--bg-darkest)';
-                        e.currentTarget.style.borderColor = 'var(--primary)';
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.backgroundColor = 'var(--bg-card)';
-                        e.currentTarget.style.color = 'var(--text-primary)';
-                        e.currentTarget.style.borderColor = 'var(--border-color)';
-                      }}
-                    >
-                      <Plus size={16} />
-                    </button>
-                  );
-                })()}
-              </div>
-            </div>
-          ))}
+              return (
+                <TestimonialCard
+                  key={item.id}
+                  testimonial={testimonialItem}
+                  index={idx}
+                  cartQuantity={cartItem ? cartItem.quantity : 0}
+                  onAdd={() => addToCart(item)}
+                  onRemove={() => updateQuantity(item.id, -1)}
+                  themeColor="var(--primary)"
+                />
+              );
+            })}
+          />
         </div>
       </main>
 
