@@ -33,10 +33,12 @@ import type {
   Order,
   SharedCartItem
 } from './db/db';
+import { ContainerScroll } from './components/ui/container-scroll-animation';
 
 interface CustomerViewProps {
   initialTable?: string;
 }
+
 
 export const CustomerView: React.FC<CustomerViewProps> = ({ initialTable }) => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
@@ -784,6 +786,170 @@ export const CustomerView: React.FC<CustomerViewProps> = ({ initialTable }) => {
             )}
           </div>
         )}
+
+        {/* Chef's Signature Showcase using Container Scroll Animation */}
+        <div className="hidden md:block" style={{ marginBottom: '40px', marginTop: '10px' }}>
+          <ContainerScroll
+            titleComponent={
+              <div style={{ paddingBottom: '20px' }}>
+                <span style={{
+                  fontSize: '0.9rem',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.15em',
+                  color: 'var(--primary)',
+                  fontWeight: 700,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '8px',
+                  marginBottom: '12px'
+                }}>
+                  <Sparkles size={16} /> Chef's Signature Showcase
+                </span>
+                <h2 style={{
+                  fontSize: '2.5rem',
+                  fontWeight: 800,
+                  color: 'var(--text-primary)',
+                  letterSpacing: '-1px',
+                  lineHeight: '1.2'
+                }}>
+                  Scroll Down to Reveal<br />
+                  <span className="gradient-text">Our Most Popular Delicacies</span>
+                </h2>
+              </div>
+            }
+          >
+            <div style={{
+              height: '100%',
+              width: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              padding: '24px',
+              backgroundColor: 'var(--bg-dark)',
+              textAlign: 'left'
+            }}>
+              <h3 style={{
+                fontSize: '1.25rem',
+                fontWeight: 700,
+                marginBottom: '16px',
+                color: 'var(--text-primary)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                borderBottom: '1px solid var(--border-color)',
+                paddingBottom: '12px'
+              }}>
+                🔥 Customer Favorites (Order Instantly)
+              </h3>
+              
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(2, 1fr)',
+                gap: '20px',
+                flex: 1,
+                overflow: 'hidden'
+              }}>
+                {menuItems.filter(item => item.popular).slice(0, 4).map(item => {
+                  const cartItem = cart.find(i => i.menuItem.id === item.id);
+                  return (
+                    <div 
+                      key={item.id}
+                      style={{
+                        backgroundColor: 'var(--bg-card)',
+                        borderRadius: 'var(--radius-md)',
+                        border: '1px solid var(--border-color)',
+                        padding: '16px',
+                        display: 'flex',
+                        gap: '16px',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        height: '120px'
+                      }}
+                    >
+                      {item.image && (
+                        <div style={{ width: '88px', height: '88px', borderRadius: 'var(--radius-sm)', overflow: 'hidden', flexShrink: 0 }}>
+                          <img src={item.image} alt={item.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                        </div>
+                      )}
+                      
+                      <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', height: '100%', justifyContent: 'space-between' }}>
+                        <div>
+                          <h4 style={{ fontSize: '0.95rem', fontWeight: 700, margin: 0, color: 'var(--text-primary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                            {item.name}
+                          </h4>
+                          <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', margin: '4px 0 0 0', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                            {item.description}
+                          </p>
+                        </div>
+                        
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '4px' }}>
+                          <span style={{ fontSize: '1rem', fontWeight: 800, color: 'var(--primary)' }}>₹{item.price}</span>
+                          
+                          {cartItem ? (
+                            <div style={{ 
+                              display: 'flex', 
+                              alignItems: 'center', 
+                              backgroundColor: 'var(--primary)', 
+                              color: 'var(--bg-darkest)',
+                              borderRadius: 'var(--radius-full)',
+                              padding: '2px',
+                              border: '1px solid var(--primary)'
+                            }}>
+                              <button
+                                onClick={() => updateQuantity(item.id, -1)}
+                                style={{ 
+                                  border: 'none', 
+                                  background: 'none', 
+                                  color: 'var(--bg-darkest)', 
+                                  padding: '4px 8px', 
+                                  cursor: 'pointer',
+                                  fontSize: '0.8rem',
+                                  fontWeight: 800
+                                }}
+                              >
+                                -
+                              </button>
+                              <span style={{ fontWeight: 800, padding: '0 2px', minWidth: '14px', textAlign: 'center', fontSize: '0.8rem' }}>
+                                {cartItem.quantity}
+                              </span>
+                              <button
+                                onClick={() => updateQuantity(item.id, 1)}
+                                style={{ 
+                                  border: 'none', 
+                                  background: 'none', 
+                                  color: 'var(--bg-darkest)', 
+                                  padding: '4px 8px', 
+                                  cursor: 'pointer',
+                                  fontSize: '0.8rem',
+                                  fontWeight: 800
+                                }}
+                              >
+                                +
+                              </button>
+                            </div>
+                          ) : (
+                            <button
+                              onClick={() => addToCart(item)}
+                              className="btn btn-primary"
+                              style={{
+                                padding: '6px 12px',
+                                fontSize: '0.75rem',
+                                fontWeight: 700,
+                                borderRadius: 'var(--radius-full)'
+                              }}
+                            >
+                              Add +
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </ContainerScroll>
+        </div>
 
         {/* Category Pills Slider */}
         <div style={{ 
