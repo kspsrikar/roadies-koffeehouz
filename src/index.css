@@ -223,3 +223,14 @@ button, input, select {
   color: var(--danger);
   border: 1px solid rgba(239, 68, 68, 0.3);
 }
+
+/* Chef Showcase Responsive Visibility */
+.chef-showcase-container {
+  display: block;
+}
+@media (max-width: 768px) {
+  .chef-showcase-container {
+    display: none;
+  }
+}
+

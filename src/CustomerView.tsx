@@ -788,7 +788,7 @@ export const CustomerView: React.FC<CustomerViewProps> = ({ initialTable }) => {
         )}
 
         {/* Chef's Signature Showcase using Container Scroll Animation */}
-        <div className="hidden md:block" style={{ marginBottom: '40px', marginTop: '10px' }}>
+        <div className="chef-showcase-container" style={{ marginBottom: '40px', marginTop: '10px' }}>
           <ContainerScroll
             titleComponent={
               <div style={{ paddingBottom: '20px' }}>
