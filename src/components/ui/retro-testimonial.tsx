@@ -93,19 +93,24 @@ const Carousel = ({ items, initialScroll = 0 }: iCarouselProps) => {
   useEffect(() => {
     if (carouselRef.current) {
       carouselRef.current.scrollLeft = initialScroll;
-      // Small timeout to allow content layout calculation
       const timer = setTimeout(checkScrollability, 100);
       return () => clearTimeout(timer);
     }
-  }, [initialScroll, items]);
+  }, [initialScroll]);
+
+  // Separate effect to check scrollability when items change, without resetting scrollLeft
+  useEffect(() => {
+    const timer = setTimeout(checkScrollability, 100);
+    return () => clearTimeout(timer);
+  }, [items.length]);
 
   return (
     <div className="relative w-full mt-4">
       <div
-        className="flex w-full overflow-x-auto scroll-smooth [scrollbar-width:none] py-4"
+        className="flex w-full overflow-x-auto scroll-smooth [scrollbar-width:none]"
         ref={carouselRef}
         onScroll={checkScrollability}
-        style={{ scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}
+        style={{ scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch', paddingTop: '28px', paddingBottom: '28px' }}
       >
         <div
           className={cn(
