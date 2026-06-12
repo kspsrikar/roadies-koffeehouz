@@ -1988,29 +1988,22 @@ export const CustomerView: React.FC<CustomerViewProps> = ({ initialTable }) => {
               <>
                 <h3 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '8px' }}>Credit/Debit Card Pay</h3>
                 <span style={{ fontSize: '0.65rem', backgroundColor: 'rgba(255,255,255,0.05)', color: 'var(--text-secondary)', padding: '2px 8px', borderRadius: '4px' }}>
-                  SECURED CARD GATEWAY
+                  POS MACHINE SIMULATION
                 </span>
                 
-                <div style={{ margin: '20px 0', padding: '20px', backgroundColor: 'rgba(0,0,0,0.2)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', textAlign: 'left' }}>
-                  <div style={{ marginBottom: '12px' }}>
-                    <label style={{ fontSize: '0.7rem', color: 'var(--text-secondary)', display: 'block', marginBottom: '4px' }}>CARD NUMBER</label>
-                    <input type="text" disabled value="•••• •••• •••• 4892" style={{ width: '100%', padding: '8px', backgroundColor: 'var(--bg-darkest)', border: '1px solid var(--border-color)', color: 'white', borderRadius: '4px', fontSize: '0.9rem' }} />
-                  </div>
-                  <div style={{ display: 'flex', gap: '10px' }}>
-                    <div style={{ flex: 1 }}>
-                      <label style={{ fontSize: '0.7rem', color: 'var(--text-secondary)', display: 'block', marginBottom: '4px' }}>EXPIRY</label>
-                      <input type="text" disabled value="12/29" style={{ width: '100%', padding: '8px', backgroundColor: 'var(--bg-darkest)', border: '1px solid var(--border-color)', color: 'white', borderRadius: '4px', fontSize: '0.9rem' }} />
-                    </div>
-                    <div style={{ flex: 1 }}>
-                      <label style={{ fontSize: '0.7rem', color: 'var(--text-secondary)', display: 'block', marginBottom: '4px' }}>CVV</label>
-                      <input type="text" disabled value="•••" style={{ width: '100%', padding: '8px', backgroundColor: 'var(--bg-darkest)', border: '1px solid var(--border-color)', color: 'white', borderRadius: '4px', fontSize: '0.9rem' }} />
-                    </div>
-                  </div>
+                <div style={{ margin: '20px 0', padding: '20px', backgroundColor: 'rgba(0,0,0,0.2)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', textAlign: 'center' }}>
+                  <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', display: 'block', marginBottom: '8px' }}>TOTAL CARD PAYMENT AMOUNT</span>
+                  <p style={{ fontSize: '1.8rem', fontWeight: 800, color: 'var(--primary)', margin: '4px 0 0 0' }}>
+                    ₹{placedOrdersList.filter(o => o.status !== 'cancelled').reduce((sum, o) => sum + o.totalAmount, 0)}
+                  </p>
+                  <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '8px' }}>
+                    A wireless card swipe terminal has been requested. Simply tap or insert your card.
+                  </p>
                 </div>
 
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
                   <BikerLoader />
-                  <span>Processing Card details securely...</span>
+                  <span>Processing terminal connection...</span>
                 </div>
               </>
             ) : billPaymentMethod === 'swiggy' ? (
