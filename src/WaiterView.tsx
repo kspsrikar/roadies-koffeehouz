@@ -578,8 +578,8 @@ export const WaiterView: React.FC = () => {
                               </button>
                               <button 
                                 onClick={() => handleStatusChange(order.id, 'served')}
-                                className="btn"
-                                style={{ padding: '8px 16px', fontSize: '0.8rem', backgroundColor: 'var(--success)', color: 'var(--bg-darkest)' }}
+                                className="btn btn-primary"
+                                style={{ padding: '8px 16px', fontSize: '0.8rem' }}
                               >
                                 <CheckCircle size={14} /> Serve Order
                               </button>
@@ -589,14 +589,10 @@ export const WaiterView: React.FC = () => {
                           {order.status === 'ready' && (
                             <button 
                               onClick={() => handleStatusChange(order.id, 'served')}
-                              className="btn"
+                              className="btn btn-primary"
                               style={{ 
                                 padding: '8px 16px', 
-                                fontSize: '0.8rem', 
-                                backgroundColor: 'var(--success)', 
-                                color: 'var(--bg-darkest)',
-                                animation: 'pulseGlow 2s infinite',
-                                fontWeight: 700
+                                fontSize: '0.8rem'
                               }}
                             >
                               <CheckCircle size={14} /> Serve Order (Ready!)

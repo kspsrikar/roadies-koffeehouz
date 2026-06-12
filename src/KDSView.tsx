@@ -223,13 +223,10 @@ export const KDSView: React.FC = () => {
                     {isPreparing ? (
                       <button
                         onClick={() => handleStatusChange(order.id, 'ready')}
+                        className="btn btn-primary"
                         style={{
                           width: '100%',
                           padding: '10px',
-                          backgroundColor: '#10b981',
-                          border: 'none',
-                          color: '#121214',
-                          fontWeight: 700,
                           borderRadius: '6px',
                           cursor: 'pointer',
                           display: 'flex',
@@ -243,20 +240,16 @@ export const KDSView: React.FC = () => {
                     ) : (
                       <button
                         onClick={() => handleStatusChange(order.id, 'preparing')}
+                        className="btn btn-primary"
                         style={{
                           width: '100%',
                           padding: '10px',
-                          backgroundColor: 'var(--primary)',
-                          border: 'none',
-                          color: '#121214',
-                          fontWeight: 700,
                           borderRadius: '6px',
                           cursor: 'pointer',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          gap: '6px',
-                          boxShadow: '0 0 10px rgba(255, 255, 255, 0.2)'
+                          gap: '6px'
                         }}
                       >
                         <ChefHat size={16} /> Start Cooking
@@ -310,17 +303,12 @@ export const KDSView: React.FC = () => {
 
                 <button
                   onClick={() => handleStatusChange(order.id, 'served')}
+                  className="btn btn-secondary"
                   style={{
                     width: '100%',
                     padding: '8px',
-                    backgroundColor: 'transparent',
-                    border: '1px solid var(--border-color)',
-                    color: 'var(--text-secondary)',
                     fontSize: '0.75rem',
-                    fontWeight: 600,
-                    borderRadius: '6px',
-                    cursor: 'pointer',
-                    transition: 'all 0.2s'
+                    borderRadius: '6px'
                   }}
                 >
                   Recall & Mark Served
