@@ -359,9 +359,17 @@ const TestimonialCard = ({
         )}
       </AnimatePresence>
 
-      <motion.button
+      <motion.div
+        role="button"
+        tabIndex={0}
         onClick={handleExpand}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            handleExpand();
+          }
+        }}
         className="text-left w-full cursor-pointer focus:outline-none"
+        style={{ display: "block" }}
         whileHover={{
           rotateX: 1.5,
           rotateY: 1.5,
@@ -373,16 +381,20 @@ const TestimonialCard = ({
         <div
           style={{
             border: `1px solid var(--border-color)`,
-            boxShadow: `0 8px 30px rgba(0,0,0,0.3)`
+            boxShadow: `0 8px 30px rgba(0,0,0,0.3)`,
+            paddingTop: "24px",
+            paddingBottom: "24px",
+            paddingLeft: "24px",
+            paddingRight: "24px",
           }}
-          className="rounded-3xl bg-[#1c1c1f] h-[480px] w-72 md:w-80 overflow-hidden flex flex-col items-center justify-between p-5 relative z-10"
+          className="rounded-3xl bg-[#1c1c1f] h-[480px] w-72 md:w-80 overflow-hidden flex flex-col items-center justify-between relative z-10"
         >
           {/* Subtle textured grid overlay */}
           <div className="absolute inset-0 opacity-[0.03] pointer-events-none rounded-3xl" 
                style={{ backgroundImage: 'radial-gradient(circle, #fff 10%, transparent 11%)', backgroundSize: '12px 12px' }} />
 
           {/* Category Tag */}
-          <div className="w-full flex justify-between items-center z-10 px-2">
+          <div className="w-full flex justify-between items-center z-10 px-1">
             <span 
               style={{ backgroundColor: itemBgColor, color: itemColor }}
               className="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider"
@@ -423,7 +435,7 @@ const TestimonialCard = ({
           </div>
 
           {/* Order Action Footer on Card */}
-          <div className="w-full flex justify-between items-center pt-4 border-t border-[#27272a] z-10 px-2">
+          <div className="w-full flex justify-between items-center pt-4 border-t border-[#27272a] z-10 px-1">
             <span className="text-[10px] text-gray-500 uppercase tracking-widest font-bold">Quick Add</span>
             {cartQuantity > 0 ? (
               <div 
@@ -461,7 +473,7 @@ const TestimonialCard = ({
             )}
           </div>
         </div>
-      </motion.button>
+      </motion.div>
     </>
   );
 };
