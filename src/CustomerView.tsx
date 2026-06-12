@@ -486,46 +486,21 @@ export const CustomerView: React.FC<CustomerViewProps> = ({ initialTable }) => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: 'var(--bg-darkest)' }}>
       {/* Top Header Bar */}
-      <header className="glass-panel" style={{ 
-        position: 'sticky', 
-        top: 0, 
-        zIndex: 50, 
-        padding: '16px 20px', 
-        display: 'flex', 
-        justifyContent: 'space-between', 
-        alignItems: 'center' 
-      }}>
+      <header className="glass-panel header-container">
         <div>
-          <h1 style={{ fontSize: '1.5rem', margin: 0, fontWeight: 800, letterSpacing: '-0.5px' }} className="gradient-text">
+          <h1 className="gradient-text header-title-text">
             ROADIES KOFFEEHOUZ
           </h1>
-          <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Kharghar, Navi Mumbai</p>
+          <p className="header-subtitle-text">Kharghar, Navi Mumbai</p>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+        <div className="header-right-actions">
           {/* Table Badge */}
           {tableNumber ? (
-            <div style={{ 
-              display: 'flex', 
-              alignItems: 'center', 
-              gap: '6px', 
-              backgroundColor: 'rgba(245, 158, 11, 0.1)', 
-              border: '1px solid rgba(245, 158, 11, 0.3)', 
-              padding: '6px 12px', 
-              borderRadius: 'var(--radius-full)',
-              fontSize: '0.85rem',
-              fontWeight: 600,
-              color: 'var(--primary)'
-            }}>
+            <div className="table-badge-container">
               <span>Table {tableNumber}</span>
               {isTableLocked && (
-                <span style={{ 
-                  fontSize: '0.65rem', 
-                  backgroundColor: 'var(--primary)', 
-                  color: 'var(--bg-darkest)', 
-                  padding: '2px 6px', 
-                  borderRadius: 'var(--radius-full)' 
-                }}>LOCKED</span>
+                <span className="table-locked-tag">LOCKED</span>
               )}
             </div>
           ) : (
