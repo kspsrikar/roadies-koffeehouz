@@ -327,6 +327,9 @@ export const clearSharedCart = (tableNumber: string) => {
   saveCarts(carts);
 };
 
+// Keep track of active subscribers to trigger instant local state updates
+const localListeners: Array<(data: { orders: Order[]; alerts: TableAlert[]; menu: MenuItem[]; carts: Record<string, SharedCartItem[]> }) => void> = [];
+
 // Unified Synchronize function
 const syncAll = () => {
   const payload = {
@@ -335,6 +338,15 @@ const syncAll = () => {
     menu: getMenuItems(),
     carts: getCarts()
   };
+
+  // Instant local state update in the current tab
+  localListeners.forEach(listener => {
+    try {
+      listener(payload);
+    } catch (e) {
+      console.error("Local listener update failed:", e);
+    }
+  });
 
   channel.postMessage({
     type: 'sync',
@@ -393,6 +405,12 @@ const syncAll = () => {
 export const subscribeToDatabase = (
   callback: (data: { orders: Order[]; alerts: TableAlert[]; menu: MenuItem[]; carts: Record<string, SharedCartItem[]> }) => void
 ) => {
+  localListeners.push(callback);
+  const removeListener = () => {
+    const idx = localListeners.indexOf(callback);
+    if (idx !== -1) localListeners.splice(idx, 1);
+  };
+
   // If Supabase is active, handle live subscriptions via WebSockets
   if (isSupabaseConfigured && supabase) {
     const loadFromSupabase = async () => {
@@ -470,6 +488,7 @@ export const subscribeToDatabase = (
       supabase.removeChannel(menuChannel);
       supabase.removeChannel(ordersChannel);
       supabase.removeChannel(alertsChannel);
+      removeListener();
     };
   }
 
@@ -541,5 +560,6 @@ export const subscribeToDatabase = (
   return () => {
     channel.removeEventListener('message', handleMessage);
     clearInterval(interval);
+    removeListener();
   };
 };
