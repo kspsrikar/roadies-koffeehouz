@@ -932,6 +932,86 @@ export const CustomerView: React.FC<CustomerViewProps> = ({ initialTable }) => {
           </div>
         )}
 
+        {/* Persistent Dine-In Orders & Bill Status Banner inside Menu */}
+        {placedOrdersList.length > 0 && (
+          <div className="glass-panel animate-fade" style={{
+            borderRadius: 'var(--radius-lg)',
+            padding: '16px 20px',
+            marginBottom: '24px',
+            border: '1px solid var(--border-color)',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '12px',
+            boxShadow: '0 8px 30px rgba(0,0,0,0.3)',
+            textAlign: 'left'
+          }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '10px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <Clock size={16} className="text-white" />
+                <span style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-primary)' }}>
+                  Active Dine-in Orders ({placedOrdersList.length})
+                </span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Bill Status:</span>
+                {placedOrdersList.every(o => o.paymentStatus === 'paid') ? (
+                  <span className="badge badge-served" style={{ fontSize: '0.65rem', padding: '2px 8px' }}>PAID</span>
+                ) : (
+                  <span className="badge badge-pending" style={{ fontSize: '0.65rem', padding: '2px 8px' }}>UNPAID</span>
+                )}
+              </div>
+            </div>
+
+            {/* Render info about the latest active order */}
+            {(() => {
+              const latestOrder = [...placedOrdersList].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())[0];
+              return (
+                <div style={{ 
+                  display: 'flex', 
+                  justifyContent: 'space-between', 
+                  alignItems: 'center',
+                  backgroundColor: 'rgba(0, 0, 0, 0.15)',
+                  borderRadius: 'var(--radius-sm)',
+                  padding: '10px 14px',
+                  border: '1px solid rgba(255, 255, 255, 0.03)'
+                }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                    <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>Latest Order Status</span>
+                    <span style={{ fontSize: '0.8rem', fontWeight: 600, color: 'white' }}>
+                      #{latestOrder.id.substring(0, 8)}... ({latestOrder.items.reduce((sum, i) => sum + i.quantity, 0)} items)
+                    </span>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <span className={`badge badge-${latestOrder.status}`} style={{ fontSize: '0.65rem' }}>{latestOrder.status}</span>
+                    <button 
+                      onClick={() => {
+                        setPlacedOrderId(latestOrder.id);
+                        setIsShowingActiveOrder(true);
+                        // Scroll up to order tracker
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                      }}
+                      className="btn btn-secondary" 
+                      style={{ padding: '6px 12px', fontSize: '0.7rem', border: '1px solid var(--border-color)' }}
+                    >
+                      Track Status
+                    </button>
+                  </div>
+                </div>
+              );
+            })()}
+
+            <div style={{ display: 'flex', gap: '10px', marginTop: '4px' }}>
+              <button 
+                onClick={() => setIsMyOrdersOpen(true)}
+                className="btn btn-primary"
+                style={{ flex: 1, padding: '10px', fontSize: '0.8rem', borderRadius: 'var(--radius-md)' }}
+              >
+                View Bill & Pay status
+              </button>
+            </div>
+          </div>
+        )}
+
         {/* Category Pills Slider */}
         <div style={{ 
           display: 'flex', 
