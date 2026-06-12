@@ -382,7 +382,7 @@ const TestimonialCard = ({
                style={{ backgroundImage: 'radial-gradient(circle, #fff 10%, transparent 11%)', backgroundSize: '12px 12px' }} />
 
           {/* Category Tag */}
-          <div className="w-full flex justify-between items-center z-10">
+          <div className="w-full flex justify-between items-center z-10 px-2">
             <span 
               style={{ backgroundColor: itemBgColor, color: itemColor }}
               className="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider"
@@ -423,8 +423,8 @@ const TestimonialCard = ({
           </div>
 
           {/* Order Action Footer on Card */}
-          <div className="w-full flex justify-between items-center pt-4 border-t border-[#27272a] z-10">
-            <span className="text-[10px] text-gray-500 uppercase tracking-widest font-bold">Insta-Order</span>
+          <div className="w-full flex justify-between items-center pt-4 border-t border-[#27272a] z-10 px-2">
+            <span className="text-[10px] text-gray-500 uppercase tracking-widest font-bold">Quick Add</span>
             {cartQuantity > 0 ? (
               <div 
                 style={{ backgroundColor: itemColor }}
