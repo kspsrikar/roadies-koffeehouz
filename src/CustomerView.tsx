@@ -514,7 +514,7 @@ export const CustomerView: React.FC<CustomerViewProps> = ({ initialTable }) => {
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', position: 'relative', backgroundColor: 'transparent' }}>
       <AmbientBackground />
       {/* Top Header Bar */}
-      <header className="glass-panel header-container" style={{ position: 'relative', zIndex: 10 }}>
+      <header className="glass-panel header-container" style={{ position: 'sticky', top: 0, zIndex: 50 }}>
         <div style={{ textAlign: 'left' }}>
           <h1 className="header-title-text" style={{ 
             fontSize: '1.25rem', 
@@ -538,35 +538,51 @@ export const CustomerView: React.FC<CustomerViewProps> = ({ initialTable }) => {
           {tableNumber ? (
             <div className="table-badge-container" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               <span>Table {tableNumber}</span>
-              <button
-                onClick={() => {
-                  sessionStorage.removeItem('roadies_table_number');
-                  sessionStorage.removeItem('roadies_guest_name');
-                  sessionStorage.removeItem('roadies_session_start_time');
-                  setTableNumber('');
-                  setGuestName('');
-                  setSessionStartTime('');
-                  setIsTableLocked(false);
-                  
-                  // Clear URL parameter so it doesn't auto-lock again on reload
-                  const url = new URL(window.location.href);
-                  url.searchParams.delete('table');
-                  window.history.replaceState({}, '', url.toString());
-                }}
-                style={{
-                  background: 'rgba(255, 255, 255, 0.1)',
-                  border: '1px solid rgba(255, 255, 255, 0.15)',
-                  color: '#ffffff',
-                  fontSize: '0.65rem',
-                  padding: '2px 8px',
+              {placedOrdersList.length === 0 ? (
+                <button
+                  onClick={() => {
+                    sessionStorage.removeItem('roadies_table_number');
+                    sessionStorage.removeItem('roadies_guest_name');
+                    sessionStorage.removeItem('roadies_session_start_time');
+                    setTableNumber('');
+                    setGuestName('');
+                    setSessionStartTime('');
+                    setIsTableLocked(false);
+                    
+                    // Clear URL parameter so it doesn't auto-lock again on reload
+                    const url = new URL(window.location.href);
+                    url.searchParams.delete('table');
+                    window.history.replaceState({}, '', url.toString());
+                  }}
+                  style={{
+                    background: 'rgba(255, 255, 255, 0.1)',
+                    border: '1px solid rgba(255, 255, 255, 0.15)',
+                    color: '#ffffff',
+                    fontSize: '0.65rem',
+                    padding: '2px 8px',
+                    borderRadius: '4px',
+                    cursor: 'pointer',
+                    fontWeight: 600,
+                    transition: 'all 0.2s'
+                  }}
+                >
+                  Change
+                </button>
+              ) : (
+                <span style={{ 
+                  fontSize: '0.65rem', 
+                  color: 'rgba(255, 255, 255, 0.6)', 
+                  backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                  padding: '2px 6px',
                   borderRadius: '4px',
-                  cursor: 'pointer',
                   fontWeight: 600,
-                  transition: 'all 0.2s'
-                }}
-              >
-                Change
-              </button>
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '3px'
+                }}>
+                  🔒 Locked
+                </span>
+              )}
             </div>
           ) : (
             <div style={{ 
