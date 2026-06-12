@@ -174,6 +174,7 @@ const TestimonialCard = ({
   onAdd = () => {},
   onRemove = () => {},
   themeColor = "var(--primary)",
+  readOnly = false,
 }: {
   testimonial: iMenuItemTestimonial;
   index: number;
@@ -184,6 +185,7 @@ const TestimonialCard = ({
   onAdd?: () => void;
   onRemove?: () => void;
   themeColor?: string;
+  readOnly?: boolean;
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -308,13 +310,17 @@ const TestimonialCard = ({
               <div className="text-gray-300 text-sm md:text-base leading-relaxed mb-6 font-medium">
                 <Quote className="h-6 w-6 opacity-30 mb-2" style={{ color: itemColor }} />
                 {testimonial.description}
-              </div>
-
-              {/* Order / Add to Cart Action */}
+              </div>               {/* Order / Add to Cart Action */}
               <div className="flex items-center justify-between border-t border-[#27272a] pt-5 mt-4">
-                <span className="text-sm text-gray-400">Add to dining table order</span>
+                <span className="text-sm text-gray-400">
+                  {readOnly ? "Scan QR to Order" : "Add to dining table order"}
+                </span>
                 
-                {cartQuantity > 0 ? (
+                {readOnly ? (
+                  <span className="text-xs font-bold text-amber-500 bg-amber-500/10 px-3 py-1.5 rounded-lg border border-amber-500/20">
+                    Scan Table QR code to Order
+                  </span>
+                ) : cartQuantity > 0 ? (
                   <div 
                     style={{ backgroundColor: itemColor }}
                     className="flex items-center rounded-full p-1"
@@ -436,8 +442,14 @@ const TestimonialCard = ({
 
           {/* Order Action Footer on Card */}
           <div className="w-full flex justify-between items-center pt-4 border-t border-[#27272a] z-10 px-1">
-            <span className="text-[10px] text-gray-500 uppercase tracking-widest font-bold">Quick Add</span>
-            {cartQuantity > 0 ? (
+            <span className="text-[10px] text-gray-500 uppercase tracking-widest font-bold">
+              {readOnly ? "Menu Only" : "Quick Add"}
+            </span>
+            {readOnly ? (
+              <span className="text-[9px] font-black text-amber-500/80 bg-amber-500/5 border border-amber-500/15 px-2.5 py-1 rounded-full uppercase tracking-wider">
+                Scan QR
+              </span>
+            ) : cartQuantity > 0 ? (
               <div 
                 style={{ backgroundColor: itemColor }}
                 className="flex items-center rounded-full p-1"
