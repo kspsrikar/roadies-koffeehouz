@@ -458,18 +458,20 @@ const TestimonialCard = ({
               >
                 <button
                   onClick={onRemove}
-                  className="h-9 w-9 text-[#121214] font-extrabold flex items-center justify-center cursor-pointer hover:scale-110 transition-transform"
+                  style={{ color: '#121214' }}
+                  className="h-9 w-9 font-extrabold flex items-center justify-center cursor-pointer hover:scale-110 transition-transform"
                 >
-                  -
+                  <Minus size={14} color="#121214" />
                 </button>
-                <span className="font-bold text-[#121214] px-3 text-base min-w-[14px] text-center">
+                <span style={{ color: '#121214' }} className="font-bold px-3 text-base min-w-[14px] text-center">
                   {cartQuantity}
                 </span>
                 <button
                   onClick={onAdd}
-                  className="h-9 w-9 text-[#121214] font-extrabold flex items-center justify-center cursor-pointer hover:scale-110 transition-transform"
+                  style={{ color: '#121214' }}
+                  className="h-9 w-9 font-extrabold flex items-center justify-center cursor-pointer hover:scale-110 transition-transform"
                 >
-                  +
+                  <Plus size={14} color="#121214" />
                 </button>
               </div>
             ) : (
@@ -479,9 +481,9 @@ const TestimonialCard = ({
                   onAdd();
                 }}
                 style={{ backgroundColor: '#ffffff', boxShadow: '0 0 12px rgba(255, 255, 255, 0.45), 0 2px 4px rgba(0, 0, 0, 0.2)' }}
-                className="h-10 w-10 rounded-full text-[#121214] font-black flex items-center justify-center hover:scale-110 transition-transform cursor-pointer"
+                className="h-10 w-10 rounded-full flex items-center justify-center hover:scale-110 transition-transform cursor-pointer"
               >
-                <Plus size={18} color="#121214" />
+                <Plus size={18} color="#121214" style={{ color: '#121214' }} />
               </button>
             )}
           </div>
