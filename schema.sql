@@ -82,7 +82,7 @@ CREATE TABLE IF NOT EXISTS menu_items (
   image_url TEXT,
   popular BOOLEAN DEFAULT false,
   ai_recommended BOOLEAN DEFAULT false,
-  upsell_item_id UUID REFERENCES menu_items(id) ON DELETE SET NULL
+  upsell_item_id TEXT REFERENCES menu_items(id) ON DELETE SET NULL
 );
 
 -- Raw Materials (Stock inventory tracking)
@@ -101,7 +101,7 @@ CREATE TABLE IF NOT EXISTS raw_materials (
 CREATE TABLE IF NOT EXISTS recipes (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   branch_id UUID REFERENCES branches(id) ON DELETE CASCADE,
-  menu_item_id UUID REFERENCES menu_items(id) ON DELETE CASCADE,
+  menu_item_id TEXT REFERENCES menu_items(id) ON DELETE CASCADE,
   material_id UUID REFERENCES raw_materials(id) ON DELETE CASCADE,
   quantity_required NUMERIC(10, 2) NOT NULL, -- Deductible stock quantity
   CONSTRAINT unique_recipe_link_per_branch UNIQUE (menu_item_id, material_id)
@@ -128,8 +128,8 @@ CREATE TABLE IF NOT EXISTS orders (
 
 CREATE TABLE IF NOT EXISTS order_items (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  order_id UUID REFERENCES orders(id) ON DELETE CASCADE,
-  menu_item_id UUID REFERENCES menu_items(id) ON DELETE SET NULL,
+  order_id TEXT REFERENCES orders(id) ON DELETE CASCADE,
+  menu_item_id TEXT REFERENCES menu_items(id) ON DELETE SET NULL,
   quantity INTEGER NOT NULL CHECK (quantity > 0),
   unit_price NUMERIC(10, 2) NOT NULL,
   notes TEXT
