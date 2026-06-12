@@ -283,18 +283,12 @@ function PasscodeGuard({
 
           <button
             type="submit"
+            className="btn btn-primary"
             style={{
               width: '100%',
-              backgroundColor: '#f59e0b',
-              color: '#09090b',
-              border: 'none',
-              borderRadius: '10px',
               padding: '12px',
               fontSize: '0.9rem',
-              fontWeight: 700,
-              cursor: 'pointer',
-              marginTop: '8px',
-              transition: 'background 0.2s'
+              marginTop: '8px'
             }}
           >
             Authorize Access
