@@ -516,18 +516,19 @@ export const CustomerView: React.FC<CustomerViewProps> = ({ initialTable }) => {
       <header className="glass-panel header-container" style={{ position: 'relative', zIndex: 10 }}>
         <div style={{ textAlign: 'left' }}>
           <h1 className="header-title-text" style={{ 
-            fontSize: '1.15rem', 
-            fontWeight: 900, 
-            letterSpacing: '1px', 
-            color: '#fff', 
-            textShadow: '0 0 8px rgba(245, 158, 11, 0.5)',
+            fontSize: '1.25rem', 
+            fontWeight: 800, 
+            letterSpacing: '0.5px', 
+            background: 'linear-gradient(to right, #ffffff 35%, #a1a1aa 100%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
             margin: 0,
             textTransform: 'uppercase'
           }}>
-            ROADIES <span style={{ color: 'var(--primary)' }}>KOFFEEHOUZ</span>
+            ROADIES KOFFEEHOUZ
           </h1>
-          <p className="header-subtitle-text" style={{ fontSize: '0.62rem', letterSpacing: '0.5px', color: 'var(--text-secondary)', margin: '1px 0 0 0' }}>
-            🏍️ GREAT RIDES • GOOD FOOD 🍳
+          <p className="header-subtitle-text" style={{ fontSize: '0.62rem', letterSpacing: '1px', color: '#71717a', margin: '2px 0 0 0', textTransform: 'uppercase', fontWeight: 600 }}>
+            Kharghar, Navi Mumbai
           </p>
         </div>
 
