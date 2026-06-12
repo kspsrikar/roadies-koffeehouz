@@ -75,7 +75,7 @@ const DEFAULT_MENU_ITEMS: MenuItem[] = [
     description: 'Loaded with pepperoni, smoked chicken, bacon bits, and mozzarella.',
     popular: true,
     inStock: true,
-    image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=500&auto=format&fit=crop&q=60'
+    image: '/pizza.jpg'
   },
   {
     id: 'm4',
@@ -99,13 +99,13 @@ const DEFAULT_MENU_ITEMS: MenuItem[] = [
   },
   {
     id: 'm6',
-    name: 'Onion Rings',
-    price: 180,
+    name: 'Crispy Sliders & Fries',
+    price: 290,
     category: 'sides',
-    description: 'Crispy, golden-fried beer-battered onion rings served with a tangy dip.',
+    description: 'Mini juicy chicken and veg sliders served with golden crispy french fries.',
     popular: true,
     inStock: true,
-    image: 'https://images.unsplash.com/photo-1639024471283-2bc7b3c6a267?w=500&auto=format&fit=crop&q=60'
+    image: '/burgers.jpg'
   },
   {
     id: 'm7',
@@ -119,21 +119,21 @@ const DEFAULT_MENU_ITEMS: MenuItem[] = [
   },
   {
     id: 'm8',
-    name: 'Freedom Potato Krispers',
-    price: 190,
+    name: 'Baked Calzone & Fries',
+    price: 340,
     category: 'sides',
-    description: 'Crispy skin-on potato wedges seasoned with a secret spicy Roadies seasoning.',
+    description: 'Golden wood-fired folded pizza dough stuffed with spiced cheese, veggies, and served with french fries.',
     inStock: true,
-    image: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=500&auto=format&fit=crop&q=60'
+    image: '/calzone.jpg'
   },
   {
     id: 'm9',
-    name: 'Hummus Falafel Feta',
+    name: 'Tortilla Tacos',
     price: 320,
     category: 'sides',
-    description: 'Creamy hummus served with crispy falafel bullets, feta cheese, and warm pita bread.',
+    description: 'Loaded soft-shell tortilla tacos with grilled veggies, salsa, and melted cheese.',
     inStock: true,
-    image: 'https://images.unsplash.com/photo-1577906096429-f73dc89b5744?w=500&auto=format&fit=crop&q=60'
+    image: '/tacos.jpg'
   },
 ];
 
@@ -148,8 +148,32 @@ export const getMenuItems = (): MenuItem[] => {
       localStorage.setItem('roadies_menu', JSON.stringify(DEFAULT_MENU_ITEMS));
       return DEFAULT_MENU_ITEMS;
     }
-    const parsed = JSON.parse(data);
-    return Array.isArray(parsed) ? parsed : DEFAULT_MENU_ITEMS;
+    let parsed = JSON.parse(data);
+    if (!Array.isArray(parsed)) return DEFAULT_MENU_ITEMS;
+
+    // Check if migration to local photos is needed (if old image links or names are present)
+    let needsMigration = false;
+    const migrated = parsed.map(item => {
+      const defaultItem = DEFAULT_MENU_ITEMS.find(d => d.id === item.id);
+      if (defaultItem) {
+        // If image URL is the old unsplash URL or name is different, migrate
+        if (
+          (defaultItem.image?.startsWith('/') && item.image !== defaultItem.image) ||
+          item.name !== defaultItem.name
+        ) {
+          needsMigration = true;
+          return { ...item, name: defaultItem.name, image: defaultItem.image, description: defaultItem.description, price: defaultItem.price };
+        }
+      }
+      return item;
+    });
+
+    if (needsMigration) {
+      localStorage.setItem('roadies_menu', JSON.stringify(migrated));
+      return migrated;
+    }
+
+    return parsed;
   } catch {
     return DEFAULT_MENU_ITEMS;
   }

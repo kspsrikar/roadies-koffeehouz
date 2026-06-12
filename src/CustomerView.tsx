@@ -826,6 +826,60 @@ export const CustomerView: React.FC<CustomerViewProps> = ({ initialTable }) => {
             })}
           />
         </div>
+
+        {/* Premium Visual Footer */}
+        <footer style={{
+          marginTop: '40px',
+          borderRadius: 'var(--radius-lg)',
+          overflow: 'hidden',
+          border: '1px solid var(--border-color)',
+          background: 'linear-gradient(180deg, rgba(30, 30, 30, 0.4) 0%, rgba(10, 10, 10, 0.8) 100%)',
+          position: 'relative'
+        }}>
+          <div style={{
+            height: '160px',
+            backgroundImage: 'url(/storefront.jpg)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            position: 'relative'
+          }}>
+            <div style={{
+              position: 'absolute',
+              inset: 0,
+              background: 'linear-gradient(to bottom, transparent, rgba(10, 10, 10, 0.95))'
+            }} />
+            <div style={{
+              position: 'absolute',
+              bottom: '16px',
+              left: '20px',
+              right: '20px'
+            }}>
+              <span style={{
+                fontSize: '0.65rem',
+                textTransform: 'uppercase',
+                letterSpacing: '1.5px',
+                color: 'var(--primary)',
+                fontWeight: 700
+              }}>Premium Cafe Experience</span>
+              <h3 style={{ fontSize: '1.3rem', fontWeight: 800, margin: '4px 0 0 0', color: '#fff' }}>Roadies Koffeehouz</h3>
+            </div>
+          </div>
+          <div style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '12px' }}>
+              <div>
+                <span style={{ fontSize: '0.7rem', color: 'var(--text-secondary)', display: 'block', marginBottom: '2px' }}>TIMINGS</span>
+                <span style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-primary)' }}>10:00 AM - 11:00 PM (Daily)</span>
+              </div>
+              <div>
+                <span style={{ fontSize: '0.7rem', color: 'var(--text-secondary)', display: 'block', marginBottom: '2px' }}>CONTACT</span>
+                <span style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-primary)' }}>+91 99309 82229</span>
+              </div>
+            </div>
+            <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.05)', paddingTop: '12px', fontSize: '0.7rem', color: 'var(--text-secondary)' }}>
+              Sector 15, Kharghar, Navi Mumbai • Crafted with love & premium ingredients.
+            </div>
+          </div>
+        </footer>
       </main>
 
       {/* Cart Drawer */}
