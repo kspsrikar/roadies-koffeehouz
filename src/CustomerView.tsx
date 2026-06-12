@@ -35,6 +35,7 @@ import type {
 } from './db/db';
 import { ContainerScroll } from './components/ui/container-scroll-animation';
 import { Carousel, TestimonialCard } from './components/ui/retro-testimonial';
+import { AmbientBackground } from './components/AmbientBackground';
 
 interface CustomerViewProps {
   initialTable?: string;
@@ -484,9 +485,10 @@ export const CustomerView: React.FC<CustomerViewProps> = ({ initialTable }) => {
   }
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: 'var(--bg-darkest)' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', position: 'relative', backgroundColor: 'transparent' }}>
+      <AmbientBackground />
       {/* Top Header Bar */}
-      <header className="glass-panel header-container">
+      <header className="glass-panel header-container" style={{ position: 'relative', zIndex: 10 }}>
         <div>
           <h1 className="gradient-text header-title-text">
             ROADIES KOFFEEHOUZ
@@ -628,7 +630,7 @@ export const CustomerView: React.FC<CustomerViewProps> = ({ initialTable }) => {
       </header>
 
       {/* Main Content Area */}
-      <main className="container" style={{ flex: 1, padding: '24px 20px', paddingBottom: '100px' }}>
+      <main className="container" style={{ flex: 1, padding: '24px 20px', paddingBottom: '100px', position: 'relative', zIndex: 10 }}>
         {/* Placed Order Status banner */}
         {placedOrder && isShowingActiveOrder && (
           <div className="glass-panel" style={{ 
