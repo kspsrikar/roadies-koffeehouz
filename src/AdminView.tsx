@@ -789,7 +789,7 @@ export const AdminView: React.FC = () => {
               <h3 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '8px' }}>
                 💳 Revenue by Payment Method ({timeRange})
               </h3>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '16px' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '16px' }}>
                 <div style={{ backgroundColor: 'rgba(255,255,255,0.02)', padding: '12px', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', textAlign: 'center' }}>
                   <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>💵 Cash</span>
                   <p style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--success)', margin: '4px 0 0 0' }}>
@@ -806,18 +806,6 @@ export const AdminView: React.FC = () => {
                   <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>💳 Card</span>
                   <p style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--primary)', margin: '4px 0 0 0' }}>
                     ₹{completedOrders.filter(o => o.paymentMethod === 'card').reduce((sum, o) => sum + o.totalAmount, 0)}
-                  </p>
-                </div>
-                <div style={{ backgroundColor: 'rgba(255,255,255,0.02)', padding: '12px', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', textAlign: 'center' }}>
-                  <span style={{ fontSize: '0.75rem', color: '#fc8019' }}>🍊 Swiggy Dineout</span>
-                  <p style={{ fontSize: '1.2rem', fontWeight: 800, color: '#fc8019', margin: '4px 0 0 0' }}>
-                    ₹{completedOrders.filter(o => o.paymentMethod === 'swiggy').reduce((sum, o) => sum + o.totalAmount, 0)}
-                  </p>
-                </div>
-                <div style={{ backgroundColor: 'rgba(255,255,255,0.02)', padding: '12px', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', textAlign: 'center' }}>
-                  <span style={{ fontSize: '0.75rem', color: '#cb202d' }}>🔴 Zomato Gold</span>
-                  <p style={{ fontSize: '1.2rem', fontWeight: 800, color: '#cb202d', margin: '4px 0 0 0' }}>
-                    ₹{completedOrders.filter(o => o.paymentMethod === 'zomato').reduce((sum, o) => sum + o.totalAmount, 0)}
                   </p>
                 </div>
               </div>

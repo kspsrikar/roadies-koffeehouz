@@ -542,8 +542,6 @@ export const WaiterView: React.FC = () => {
                                 <option value="cash">💵 Cash</option>
                                 <option value="card">💳 Card</option>
                                 <option value="upi">📲 UPI</option>
-                                <option value="swiggy">🍊 Swiggy</option>
-                                <option value="zomato">🔴 Zomato</option>
                               </select>
                             </div>
                           )}
