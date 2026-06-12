@@ -90,7 +90,7 @@ export const AmbientBackground: React.FC = () => {
             style={{
               position: 'absolute',
               inset: 0,
-              opacity: isCurrent ? (fade ? 0.35 : 0) : 0.35,
+              opacity: isCurrent ? (fade ? 0.65 : 0) : 0.65,
               transition: 'opacity 0.8s ease-in-out',
               zIndex: isCurrent ? 2 : 1
             }}
@@ -111,11 +111,11 @@ export const AmbientBackground: React.FC = () => {
                   }, 800);
                 }}
                 onError={() => {
-                  // If video fails to load (e.g. 404 because file is not pasted yet), filter it out
+                  // If video fails to load, remove it and restart transition safely
                   setMediaList((prev) => prev.filter((m) => m.url !== item.url));
-                  if (currentIndex >= mediaList.length - 1) {
-                    setCurrentIndex(0);
-                  }
+                  setCurrentIndex(0);
+                  setPrevIndex(null);
+                  setFade(true);
                 }}
                 style={{
                   width: '100%',
@@ -142,8 +142,8 @@ export const AmbientBackground: React.FC = () => {
       <div style={{
         position: 'absolute',
         inset: 0,
-        background: 'radial-gradient(circle at center, rgba(10, 10, 10, 0.7) 0%, rgba(5, 5, 5, 0.95) 100%)',
-        backdropFilter: 'blur(35px) saturate(150%)',
+        background: 'radial-gradient(circle at center, rgba(10, 10, 10, 0.4) 0%, rgba(5, 5, 5, 0.85) 100%)',
+        backdropFilter: 'blur(20px) saturate(140%)',
         zIndex: 3
       }} />
     </div>
