@@ -140,7 +140,7 @@ function App() {
   // Support both clean URLs (/waiter) and query params fallback (?view=waiter)
   if (currentPath === '/waiter' || viewParam === 'waiter') {
     return (
-      <PasscodeGuard targetPasscode="2322" sessionKey="roadies_waiter_auth" panelName="Waiter Dashboard">
+      <PasscodeGuard targetPasscode="4321" sessionKey="roadies_waiter_auth" panelName="Waiter Dashboard">
         <WaiterView />
       </PasscodeGuard>
     );
@@ -148,7 +148,7 @@ function App() {
 
   if (currentPath === '/admin' || viewParam === 'admin') {
     return (
-      <PasscodeGuard targetPasscode="7989" sessionKey="roadies_admin_auth" panelName="Admin Control Panel">
+      <PasscodeGuard targetPasscode="4321" sessionKey="roadies_admin_auth" panelName="Admin Control Panel">
         <AdminView />
       </PasscodeGuard>
     );
@@ -156,7 +156,7 @@ function App() {
 
   if (currentPath === '/kitchen' || viewParam === 'kitchen') {
     return (
-      <PasscodeGuard targetPasscode="2311" sessionKey="roadies_kitchen_auth" panelName="Kitchen Display (KDS)">
+      <PasscodeGuard targetPasscode="4321" sessionKey="roadies_kitchen_auth" panelName="Kitchen Display (KDS)">
         <KDSView />
       </PasscodeGuard>
     );
