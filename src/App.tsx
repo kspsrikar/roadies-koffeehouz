@@ -139,19 +139,170 @@ function App() {
 
   // Support both clean URLs (/waiter) and query params fallback (?view=waiter)
   if (currentPath === '/waiter' || viewParam === 'waiter') {
-    return <WaiterView />;
+    return (
+      <PasscodeGuard targetPasscode="2322" sessionKey="roadies_waiter_auth" panelName="Waiter Dashboard">
+        <WaiterView />
+      </PasscodeGuard>
+    );
   }
 
   if (currentPath === '/admin' || viewParam === 'admin') {
-    return <AdminView />;
+    return (
+      <PasscodeGuard targetPasscode="7989" sessionKey="roadies_admin_auth" panelName="Admin Control Panel">
+        <AdminView />
+      </PasscodeGuard>
+    );
   }
 
   if (currentPath === '/kitchen' || viewParam === 'kitchen') {
-    return <KDSView />;
+    return (
+      <PasscodeGuard targetPasscode="2311" sessionKey="roadies_kitchen_auth" panelName="Kitchen Display (KDS)">
+        <KDSView />
+      </PasscodeGuard>
+    );
   }
 
   // Default to Customer Menu
   return <CustomerView />;
+}
+
+// Security passcode component to lock staff/owner pages
+function PasscodeGuard({
+  targetPasscode,
+  sessionKey,
+  panelName,
+  children
+}: {
+  targetPasscode: string;
+  sessionKey: string;
+  panelName: string;
+  children: React.ReactNode;
+}) {
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    return sessionStorage.getItem(sessionKey) === 'true';
+  });
+  const [passcode, setPasscode] = useState('');
+  const [error, setError] = useState('');
+
+  const handleUnlock = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (passcode === targetPasscode) {
+      sessionStorage.setItem(sessionKey, 'true');
+      setIsAuthenticated(true);
+      setError('');
+    } else {
+      setError('❌ Incorrect passcode. Access Denied!');
+      setPasscode('');
+    }
+  };
+
+  if (isAuthenticated) {
+    return <>{children}</>;
+  }
+
+  return (
+    <div style={{
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      minHeight: '100vh',
+      backgroundColor: '#09090b',
+      color: '#f4f4f5',
+      fontFamily: 'Outfit, sans-serif',
+      padding: '24px',
+      textAlign: 'center',
+      position: 'relative'
+    }}>
+      {/* Background glow */}
+      <div style={{
+        position: 'absolute',
+        width: '350px',
+        height: '350px',
+        background: 'radial-gradient(circle, rgba(245, 158, 11, 0.1) 0%, rgba(0,0,0,0) 70%)',
+        filter: 'blur(30px)',
+        zIndex: 1,
+        pointerEvents: 'none'
+      }} />
+
+      <div style={{
+        position: 'relative',
+        zIndex: 2,
+        maxWidth: '400px',
+        width: '100%',
+        background: 'rgba(28, 28, 31, 0.75)',
+        backdropFilter: 'blur(12px)',
+        border: '1px solid rgba(255, 255, 255, 0.05)',
+        borderRadius: '20px',
+        padding: '36px 24px',
+        boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.5)'
+      }}>
+        <div style={{
+          fontSize: '36px',
+          marginBottom: '16px',
+          color: '#f59e0b'
+        }}>
+          🔒
+        </div>
+        <h2 style={{ fontSize: '1.4rem', fontWeight: 700, marginBottom: '8px' }}>
+          {panelName}
+        </h2>
+        <p style={{ fontSize: '0.85rem', color: '#a1a1aa', marginBottom: '24px' }}>
+          Enter staff passcode to unlock this panel.
+        </p>
+
+        <form onSubmit={handleUnlock} style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+          <input
+            type="password"
+            pattern="[0-9]*"
+            inputMode="numeric"
+            value={passcode}
+            onChange={(e) => setPasscode(e.target.value)}
+            placeholder="••••"
+            required
+            autoFocus
+            style={{
+              width: '100%',
+              backgroundColor: '#121214',
+              border: '1px solid #27272a',
+              borderRadius: '10px',
+              padding: '12px',
+              color: 'white',
+              fontSize: '1.25rem',
+              letterSpacing: '0.5em',
+              textAlign: 'center',
+              outline: 'none'
+            }}
+          />
+
+          {error && (
+            <p style={{ fontSize: '0.8rem', color: '#ef4444', margin: '4px 0', fontWeight: 600 }}>
+              {error}
+            </p>
+          )}
+
+          <button
+            type="submit"
+            style={{
+              width: '100%',
+              backgroundColor: '#f59e0b',
+              color: '#09090b',
+              border: 'none',
+              borderRadius: '10px',
+              padding: '12px',
+              fontSize: '0.9rem',
+              fontWeight: 700,
+              cursor: 'pointer',
+              marginTop: '8px',
+              transition: 'background 0.2s'
+            }}
+          >
+            Authorize Access
+          </button>
+        </form>
+      </div>
+    </div>
+  );
 }
 
 export default App;
