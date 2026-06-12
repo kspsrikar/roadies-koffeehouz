@@ -5,7 +5,7 @@ import { AdminView } from './AdminView';
 import { KDSView } from './KDSView';
 
 // Set to true to enable maintenance mode across the application
-const MAINTENANCE_MODE = true;
+const MAINTENANCE_MODE = false;
 const BYPASS_KEY = 'roadies'; // Append ?bypass=roadies to access the website during maintenance
 
 function App() {
