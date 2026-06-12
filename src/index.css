@@ -11,10 +11,10 @@
   --bg-card: #1c1c1f;
   --bg-card-hover: #26262b;
   
-  --primary: #f59e0b; /* Roadies Gold */
-  --primary-hover: #d97706;
-  --primary-light: rgba(245, 158, 11, 0.1);
-  --primary-glow: rgba(245, 158, 11, 0.35);
+  --primary: #ffffff; /* Premium White */
+  --primary-hover: #e4e4e7;
+  --primary-light: rgba(255, 255, 255, 0.08);
+  --primary-glow: rgba(255, 255, 255, 0.25);
   
   --text-primary: #f4f4f5;
   --text-secondary: #a1a1aa;
@@ -33,7 +33,7 @@
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.12);
-  --shadow-glow: 0 0 15px rgba(245, 158, 11, 0.15);
+  --shadow-glow: 0 0 15px rgba(255, 255, 255, 0.15);
   
   --radius-sm: 8px;
   --radius-md: 12px;
@@ -159,7 +159,7 @@ button, input, select {
 .btn-primary:hover {
   background-color: var(--primary-hover);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.25);
 }
 
 .btn-primary:active {
