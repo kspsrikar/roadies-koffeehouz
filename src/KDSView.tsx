@@ -76,31 +76,31 @@ export const KDSView: React.FC = () => {
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#09090b', color: '#f4f4f5', fontFamily: 'system-ui, sans-serif' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: 'var(--bg-darkest)', color: 'var(--text-primary)', fontFamily: 'var(--font-sans)' }}>
       
       {/* KDS Header */}
       <header style={{ 
-        backgroundColor: '#18181b', 
-        borderBottom: '1px solid #27272a',
+        backgroundColor: 'var(--bg-dark)', 
+        borderBottom: '1px solid var(--border-color)',
         padding: '16px 24px', 
         display: 'flex', 
         justifyContent: 'space-between', 
         alignItems: 'center' 
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <div style={{ backgroundColor: 'rgba(217, 119, 6, 0.1)', color: 'var(--primary)', padding: '8px', borderRadius: '8px' }}>
+          <div style={{ backgroundColor: 'var(--primary-light)', color: 'var(--primary)', padding: '8px', borderRadius: '8px' }}>
             <CookingPot size={20} />
           </div>
           <div>
             <h1 style={{ fontSize: '1.3rem', margin: 0, fontWeight: 800, letterSpacing: '-0.5px', color: 'var(--primary)' }}>
               KITCHEN DISPLAY SYSTEM (KDS)
             </h1>
-            <p style={{ fontSize: '0.75rem', color: '#a1a1aa', margin: 0 }}>Roadies Koffeehouz Live Cook Queue</p>
+            <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', margin: 0 }}>Roadies Koffeehouz Live Cook Queue</p>
           </div>
         </div>
 
         {/* Tab switchers: Queue vs Completed Ready */}
-        <div style={{ display: 'flex', gap: '8px', backgroundColor: '#09090b', padding: '4px', borderRadius: '6px', border: '1px solid #27272a' }}>
+        <div style={{ display: 'flex', gap: '8px', backgroundColor: 'var(--bg-darkest)', padding: '4px', borderRadius: '6px', border: '1px solid var(--border-color)' }}>
           <button
             onClick={() => setActiveTab('active')}
             style={{
@@ -108,7 +108,7 @@ export const KDSView: React.FC = () => {
               borderRadius: '4px',
               border: 'none',
               backgroundColor: activeTab === 'active' ? 'var(--primary)' : 'transparent',
-              color: activeTab === 'active' ? '#09090b' : '#a1a1aa',
+              color: activeTab === 'active' ? '#121214' : 'var(--text-secondary)',
               fontSize: '0.8rem',
               fontWeight: 700,
               cursor: 'pointer',
@@ -124,7 +124,7 @@ export const KDSView: React.FC = () => {
               borderRadius: '4px',
               border: 'none',
               backgroundColor: activeTab === 'ready' ? 'var(--primary)' : 'transparent',
-              color: activeTab === 'ready' ? '#09090b' : '#a1a1aa',
+              color: activeTab === 'ready' ? '#121214' : 'var(--text-secondary)',
               fontSize: '0.8rem',
               fontWeight: 700,
               cursor: 'pointer',
@@ -150,9 +150,9 @@ export const KDSView: React.FC = () => {
                 <div 
                   key={order.id} 
                   style={{
-                    backgroundColor: '#18181b',
+                    backgroundColor: 'var(--bg-card)',
                     borderRadius: '12px',
-                    border: `2px solid ${isPreparing ? '#10b981' : '#f59e0b'}`,
+                    border: `2px solid ${isPreparing ? '#10b981' : 'var(--border-color)'}`,
                     display: 'flex',
                     flexDirection: 'column',
                     overflow: 'hidden',
@@ -162,8 +162,8 @@ export const KDSView: React.FC = () => {
                   {/* Card Header */}
                   <div style={{ 
                     padding: '12px 16px', 
-                    borderBottom: '1px solid #27272a',
-                    backgroundColor: isPreparing ? 'rgba(16, 185, 129, 0.05)' : 'rgba(245, 158, 11, 0.05)',
+                    borderBottom: '1px solid var(--border-color)',
+                    backgroundColor: isPreparing ? 'rgba(16, 185, 129, 0.05)' : 'rgba(255, 255, 255, 0.03)',
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'center'
@@ -172,15 +172,15 @@ export const KDSView: React.FC = () => {
                       <span style={{ 
                         fontSize: '0.75rem', 
                         fontWeight: 800, 
-                        color: isPreparing ? '#10b981' : '#f59e0b',
-                        backgroundColor: '#09090b',
+                        color: isPreparing ? '#10b981' : 'var(--primary)',
+                        backgroundColor: 'var(--bg-darkest)',
                         padding: '3px 8px',
                         borderRadius: '4px',
                         marginRight: '6px'
                       }}>
                         TABLE {order.tableNumber}
                       </span>
-                      <span style={{ fontSize: '0.75rem', color: '#a1a1aa', fontWeight: 600 }}>{order.id.split('-')[1] || order.id}</span>
+                      <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', fontWeight: 600 }}>{order.id.split('-')[1] || order.id}</span>
                     </div>
                     <Timer start={order.createdAt} />
                   </div>
@@ -210,7 +210,7 @@ export const KDSView: React.FC = () => {
                         />
                         <div>
                           <strong style={{ fontSize: '1.05rem', color: 'var(--primary)' }}>{item.quantity}x</strong> {item.menuItem.name}
-                          <p style={{ fontSize: '0.75rem', color: '#a1a1aa', margin: '2px 0 0 0', fontStyle: 'italic' }}>
+                          <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', margin: '2px 0 0 0', fontStyle: 'italic' }}>
                             {item.menuItem.category.toUpperCase()}
                           </p>
                         </div>
@@ -219,7 +219,7 @@ export const KDSView: React.FC = () => {
                   </div>
 
                   {/* Action Button */}
-                  <div style={{ padding: '12px 16px', borderTop: '1px solid #27272a', backgroundColor: '#09090b' }}>
+                  <div style={{ padding: '12px 16px', borderTop: '1px solid var(--border-color)', backgroundColor: 'var(--bg-darkest)' }}>
                     {isPreparing ? (
                       <button
                         onClick={() => handleStatusChange(order.id, 'ready')}
@@ -228,7 +228,7 @@ export const KDSView: React.FC = () => {
                           padding: '10px',
                           backgroundColor: '#10b981',
                           border: 'none',
-                          color: '#09090b',
+                          color: '#121214',
                           fontWeight: 700,
                           borderRadius: '6px',
                           cursor: 'pointer',
@@ -246,16 +246,17 @@ export const KDSView: React.FC = () => {
                         style={{
                           width: '100%',
                           padding: '10px',
-                          backgroundColor: '#f59e0b',
+                          backgroundColor: 'var(--primary)',
                           border: 'none',
-                          color: '#09090b',
+                          color: '#121214',
                           fontWeight: 700,
                           borderRadius: '6px',
                           cursor: 'pointer',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          gap: '6px'
+                          gap: '6px',
+                          boxShadow: '0 0 10px rgba(255, 255, 255, 0.2)'
                         }}
                       >
                         <ChefHat size={16} /> Start Cooking
@@ -285,23 +286,23 @@ export const KDSView: React.FC = () => {
               <div 
                 key={order.id} 
                 style={{
-                  backgroundColor: '#18181b',
+                  backgroundColor: 'var(--bg-card)',
                   borderRadius: '12px',
-                  border: '1px solid #27272a',
+                  border: '1px solid var(--border-color)',
                   padding: '16px',
-                  opacity: 0.8
+                  opacity: 0.95
                 }}
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px' }}>
                   <span style={{ fontWeight: 800, color: '#10b981', backgroundColor: 'rgba(16, 185, 129, 0.05)', padding: '2px 8px', borderRadius: '4px', fontSize: '0.8rem' }}>
                     TABLE {order.tableNumber}
                   </span>
-                  <span style={{ fontSize: '0.75rem', color: '#71717a' }}>{order.id}</span>
+                  <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{order.id.substring(0, 8)}</span>
                 </div>
                 
-                <div style={{ borderBottom: '1px dashed #27272a', paddingBottom: '10px', marginBottom: '10px' }}>
+                <div style={{ borderBottom: '1px dashed var(--border-color)', paddingBottom: '10px', marginBottom: '10px' }}>
                   {order.items.map((item, idx) => (
-                    <div key={idx} style={{ fontSize: '0.85rem', color: '#d4d4d8', margin: '4px 0' }}>
+                    <div key={idx} style={{ fontSize: '0.85rem', color: 'var(--text-primary)', margin: '4px 0' }}>
                       <strong>{item.quantity}x</strong> {item.menuItem.name}
                     </div>
                   ))}
@@ -313,12 +314,13 @@ export const KDSView: React.FC = () => {
                     width: '100%',
                     padding: '8px',
                     backgroundColor: 'transparent',
-                    border: '1px solid #27272a',
-                    color: '#a1a1aa',
+                    border: '1px solid var(--border-color)',
+                    color: 'var(--text-secondary)',
                     fontSize: '0.75rem',
                     fontWeight: 600,
                     borderRadius: '6px',
-                    cursor: 'pointer'
+                    cursor: 'pointer',
+                    transition: 'all 0.2s'
                   }}
                 >
                   Recall & Mark Served

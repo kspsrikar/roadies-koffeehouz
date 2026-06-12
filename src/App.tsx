@@ -37,9 +37,9 @@ function App() {
         alignItems: 'center',
         justifyContent: 'center',
         minHeight: '100vh',
-        backgroundColor: '#09090b',
-        color: '#f4f4f5',
-        fontFamily: 'Outfit, sans-serif',
+        backgroundColor: 'var(--bg-darkest)',
+        color: 'var(--text-primary)',
+        fontFamily: 'var(--font-sans)',
         padding: '24px',
         textAlign: 'center',
         position: 'relative',
@@ -52,7 +52,7 @@ function App() {
           left: '20%',
           width: '400px',
           height: '400px',
-          background: 'radial-gradient(circle, rgba(245, 158, 11, 0.15) 0%, rgba(245, 158, 11, 0) 70%)',
+          background: 'radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0) 70%)',
           filter: 'blur(40px)',
           zIndex: 1,
           pointerEvents: 'none'
@@ -63,7 +63,7 @@ function App() {
           right: '20%',
           width: '400px',
           height: '400px',
-          background: 'radial-gradient(circle, rgba(245, 158, 11, 0.1) 0%, rgba(245, 158, 11, 0) 70%)',
+          background: 'radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 70%)',
           filter: 'blur(40px)',
           zIndex: 1,
           pointerEvents: 'none'
@@ -73,13 +73,13 @@ function App() {
           position: 'relative',
           zIndex: 2,
           maxWidth: '500px',
-          background: 'rgba(28, 28, 31, 0.65)',
+          background: 'rgba(43, 43, 52, 0.65)',
           backdropFilter: 'blur(16px)',
           WebkitBackdropFilter: 'blur(16px)',
-          border: '1px solid rgba(39, 39, 42, 0.8)',
+          border: '1px solid var(--border-color)',
           borderRadius: '24px',
           padding: '40px 32px',
-          boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 0 30px rgba(245, 158, 11, 0.05)'
+          boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 0 30px rgba(255, 255, 255, 0.05)'
         }}>
           {/* Animated Steam/Icon */}
           <div style={{
@@ -89,12 +89,12 @@ function App() {
             width: '80px',
             height: '80px',
             borderRadius: '50%',
-            background: 'rgba(245, 158, 11, 0.1)',
-            border: '1px solid rgba(245, 158, 11, 0.25)',
+            background: 'var(--primary-light)',
+            border: '1px solid var(--border-color)',
             marginBottom: '28px',
-            color: '#f59e0b',
+            color: 'var(--primary)',
             fontSize: '36px',
-            boxShadow: '0 0 15px rgba(245, 158, 11, 0.1)'
+            boxShadow: '0 0 15px rgba(255, 255, 255, 0.1)'
           }}>
             ☕
           </div>
@@ -104,7 +104,7 @@ function App() {
             fontWeight: 700,
             marginBottom: '16px',
             letterSpacing: '-0.5px',
-            background: 'linear-gradient(to right, #f4f4f5, #f59e0b)',
+            background: 'linear-gradient(to right, #f4f4f5, #ffffff)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent'
           }}>
@@ -112,7 +112,7 @@ function App() {
           </h1>
 
           <p style={{
-            color: '#a1a1aa',
+            color: 'var(--text-secondary)',
             fontSize: '15px',
             lineHeight: 1.6,
             marginBottom: '32px'
@@ -124,11 +124,11 @@ function App() {
             display: 'inline-block',
             padding: '8px 16px',
             borderRadius: '9999px',
-            background: 'rgba(245, 158, 11, 0.08)',
-            border: '1px solid rgba(245, 158, 11, 0.15)',
+            background: 'var(--primary-light)',
+            border: '1px solid var(--border-color)',
             fontSize: '13px',
             fontWeight: 500,
-            color: '#f59e0b'
+            color: 'var(--primary)'
           }}>
             ⏳ Estimated back online: Today
           </div>
@@ -207,9 +207,9 @@ function PasscodeGuard({
       alignItems: 'center',
       justifyContent: 'center',
       minHeight: '100vh',
-      backgroundColor: '#09090b',
-      color: '#f4f4f5',
-      fontFamily: 'Outfit, sans-serif',
+      backgroundColor: 'var(--bg-darkest)',
+      color: 'var(--text-primary)',
+      fontFamily: 'var(--font-sans)',
       padding: '24px',
       textAlign: 'center',
       position: 'relative'
@@ -219,7 +219,7 @@ function PasscodeGuard({
         position: 'absolute',
         width: '350px',
         height: '350px',
-        background: 'radial-gradient(circle, rgba(245, 158, 11, 0.1) 0%, rgba(0,0,0,0) 70%)',
+        background: 'radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, rgba(0,0,0,0) 70%)',
         filter: 'blur(30px)',
         zIndex: 1,
         pointerEvents: 'none'
@@ -230,9 +230,9 @@ function PasscodeGuard({
         zIndex: 2,
         maxWidth: '400px',
         width: '100%',
-        background: 'rgba(28, 28, 31, 0.75)',
+        background: 'rgba(43, 43, 52, 0.75)',
         backdropFilter: 'blur(12px)',
-        border: '1px solid rgba(255, 255, 255, 0.05)',
+        border: '1px solid var(--border-color)',
         borderRadius: '20px',
         padding: '36px 24px',
         boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.5)'
@@ -240,7 +240,7 @@ function PasscodeGuard({
         <div style={{
           fontSize: '36px',
           marginBottom: '16px',
-          color: '#f59e0b'
+          color: 'var(--primary)'
         }}>
           🔒
         </div>

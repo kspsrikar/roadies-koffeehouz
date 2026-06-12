@@ -154,7 +154,7 @@ export const WaiterView: React.FC = () => {
 
   const generateTableQr = () => {
     const link = `${window.location.origin}/?table=${qrTable}`;
-    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&color=d97706&bgcolor=121214&data=${encodeURIComponent(link)}`;
+    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&color=ffffff&bgcolor=1b1b21&data=${encodeURIComponent(link)}`;
     setGeneratedQr(qrUrl);
   };
 
@@ -351,7 +351,7 @@ export const WaiterView: React.FC = () => {
                 alignItems: 'center',
                 justifyContent: 'center',
                 gap: '8px',
-                boxShadow: waiterTab === 'orders' ? '0 4px 12px rgba(217, 119, 6, 0.2)' : 'none'
+                boxShadow: waiterTab === 'orders' ? '0 0 15px rgba(255, 255, 255, 0.25)' : 'none'
               }}
             >
               <Layers size={18} /> Orders Feed
@@ -373,7 +373,7 @@ export const WaiterView: React.FC = () => {
                 alignItems: 'center',
                 justifyContent: 'center',
                 gap: '8px',
-                boxShadow: waiterTab === 'stock' ? '0 4px 12px rgba(217, 119, 6, 0.2)' : 'none'
+                boxShadow: waiterTab === 'stock' ? '0 0 15px rgba(255, 255, 255, 0.25)' : 'none'
               }}
             >
               <ChefHat size={18} /> Menu Stock & Availability
