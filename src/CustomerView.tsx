@@ -14,7 +14,8 @@ import {
   Receipt,
   Bell,
   Users,
-  Sparkles
+  Sparkles,
+  Bike
 } from 'lucide-react';
 import { 
   createOrder, 
@@ -40,6 +41,48 @@ import { AmbientBackground } from './components/AmbientBackground';
 interface CustomerViewProps {
   initialTable?: string;
 }
+
+export const BikerLoader: React.FC = () => {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px', margin: '20px auto', width: '100%' }}>
+      <div style={{ position: 'relative', width: '120px', height: '45px', overflow: 'hidden', margin: '0 auto' }}>
+        <div style={{
+          position: 'absolute',
+          animation: 'bikeRide 1.8s ease-in-out infinite',
+          display: 'flex',
+          alignItems: 'center',
+          color: 'var(--primary)'
+        }}>
+          <Bike size={36} />
+          {/* Small smoke puff animation */}
+          <div style={{
+            width: '6px',
+            height: '6px',
+            backgroundColor: 'rgba(255,255,255,0.4)',
+            borderRadius: '50%',
+            marginLeft: '-6px',
+            marginTop: '12px',
+            animation: 'exhaustSmoke 0.6s linear infinite'
+          }} />
+        </div>
+      </div>
+      <style>{`
+        @keyframes bikeRide {
+          0% { left: -40px; transform: scaleX(1) translateY(0px) rotate(0deg); }
+          45% { transform: scaleX(1) translateY(-3px) rotate(-8deg); } /* Slight wheelie */
+          50% { left: 80px; transform: scaleX(1) translateY(0px) rotate(0deg); }
+          55% { transform: scaleX(-1) translateY(0px) rotate(0deg); } /* Turn around */
+          95% { transform: scaleX(-1) translateY(-3px) rotate(8deg); }
+          100% { left: -40px; transform: scaleX(-1) translateY(0px) rotate(0deg); }
+        }
+        @keyframes exhaustSmoke {
+          0% { transform: scale(1) translate(0, 0); opacity: 0.8; }
+          100% { transform: scale(3) translate(-15px, -8px); opacity: 0; }
+        }
+      `}</style>
+    </div>
+  );
+};
 
 
 export const CustomerView: React.FC<CustomerViewProps> = ({ initialTable }) => {
@@ -340,18 +383,8 @@ export const CustomerView: React.FC<CustomerViewProps> = ({ initialTable }) => {
           textAlign: 'center',
           boxShadow: '0 10px 30px rgba(0,0,0,0.5)'
         }}>
-          <div style={{ 
-            width: '60px', 
-            height: '60px', 
-            backgroundColor: 'rgba(245, 158, 11, 0.1)', 
-            color: 'var(--primary)', 
-            borderRadius: '50%', 
-            display: 'inline-flex', 
-            alignItems: 'center', 
-            justifyContent: 'center',
-            marginBottom: '16px'
-          }}>
-            <ShoppingBag size={28} />
+          <div style={{ marginBottom: '24px', display: 'flex', justifyContent: 'center' }}>
+            <img src="/logo.png" alt="Roadies Koffeehouz Logo" style={{ height: '90px', objectFit: 'contain' }} />
           </div>
           <h2 style={{ fontSize: '1.4rem', fontWeight: 800, marginBottom: '6px' }} className="gradient-text">
             WELCOME TO ROADIES
@@ -422,18 +455,8 @@ export const CustomerView: React.FC<CustomerViewProps> = ({ initialTable }) => {
           textAlign: 'center',
           boxShadow: '0 10px 30px rgba(0,0,0,0.5)'
         }}>
-          <div style={{ 
-            width: '60px', 
-            height: '60px', 
-            backgroundColor: 'rgba(217, 119, 6, 0.1)', 
-            color: 'var(--primary)', 
-            borderRadius: '50%', 
-            display: 'inline-flex', 
-            alignItems: 'center', 
-            justifyContent: 'center',
-            marginBottom: '16px'
-          }}>
-            <Users size={28} />
+          <div style={{ marginBottom: '24px', display: 'flex', justifyContent: 'center' }}>
+            <img src="/logo.png" alt="Roadies Koffeehouz Logo" style={{ height: '90px', objectFit: 'contain' }} />
           </div>
           <h2 style={{ fontSize: '1.4rem', fontWeight: 800, marginBottom: '6px' }} className="gradient-text">
             JOIN TABLE {tableNumber}
@@ -491,21 +514,50 @@ export const CustomerView: React.FC<CustomerViewProps> = ({ initialTable }) => {
       <AmbientBackground />
       {/* Top Header Bar */}
       <header className="glass-panel header-container" style={{ position: 'relative', zIndex: 10 }}>
-        <div>
-          <h1 className="gradient-text header-title-text">
-            ROADIES KOFFEEHOUZ
-          </h1>
-          <p className="header-subtitle-text">Kharghar, Navi Mumbai</p>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <img src="/logo.png" alt="Roadies Logo" style={{ height: '40px', objectFit: 'contain' }} />
+          <div style={{ textAlign: 'left' }}>
+            <h1 className="gradient-text header-title-text" style={{ fontSize: '1.05rem', margin: 0, lineHeight: 1.1 }}>
+              ROADIES KOFFEEHOUZ
+            </h1>
+            <p className="header-subtitle-text" style={{ margin: '2px 0 0 0' }}>Kharghar, Navi Mumbai</p>
+          </div>
         </div>
 
         <div className="header-right-actions">
           {/* Table Badge */}
           {tableNumber ? (
-            <div className="table-badge-container">
+            <div className="table-badge-container" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               <span>Table {tableNumber}</span>
-              {isTableLocked && (
-                <span className="table-locked-tag">LOCKED</span>
-              )}
+              <button
+                onClick={() => {
+                  sessionStorage.removeItem('roadies_table_number');
+                  sessionStorage.removeItem('roadies_guest_name');
+                  sessionStorage.removeItem('roadies_session_start_time');
+                  setTableNumber('');
+                  setGuestName('');
+                  setSessionStartTime('');
+                  setIsTableLocked(false);
+                  
+                  // Clear URL parameter so it doesn't auto-lock again on reload
+                  const url = new URL(window.location.href);
+                  url.searchParams.delete('table');
+                  window.history.replaceState({}, '', url.toString());
+                }}
+                style={{
+                  background: 'rgba(255, 255, 255, 0.1)',
+                  border: '1px solid rgba(255, 255, 255, 0.15)',
+                  color: 'var(--primary)',
+                  fontSize: '0.65rem',
+                  padding: '2px 8px',
+                  borderRadius: '4px',
+                  cursor: 'pointer',
+                  fontWeight: 600,
+                  transition: 'all 0.2s'
+                }}
+              >
+                Change
+              </button>
             </div>
           ) : (
             <div style={{ 
@@ -1706,15 +1758,8 @@ export const CustomerView: React.FC<CustomerViewProps> = ({ initialTable }) => {
                   </p>
                 </div>
                 
-                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '8px', fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
-                  <div style={{
-                    width: '12px',
-                    height: '12px',
-                    border: '2px solid rgba(255, 255, 255, 0.1)',
-                    borderTop: '2px solid var(--primary)',
-                    borderRadius: '50%',
-                    animation: 'spin 1s linear infinite'
-                  }} />
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
+                  <BikerLoader />
                   <span>Waiting for payment...</span>
                 </div>
 
@@ -1754,15 +1799,8 @@ export const CustomerView: React.FC<CustomerViewProps> = ({ initialTable }) => {
                   </div>
                 </div>
 
-                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '8px', fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
-                  <div style={{
-                    width: '12px',
-                    height: '12px',
-                    border: '2px solid rgba(255, 255, 255, 0.1)',
-                    borderTop: '2px solid var(--primary)',
-                    borderRadius: '50%',
-                    animation: 'spin 1s linear infinite'
-                  }} />
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
+                  <BikerLoader />
                   <span>Processing Card details securely...</span>
                 </div>
               </>
@@ -1789,15 +1827,8 @@ export const CustomerView: React.FC<CustomerViewProps> = ({ initialTable }) => {
                   </div>
                 </div>
 
-                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '8px', fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
-                  <div style={{
-                    width: '12px',
-                    height: '12px',
-                    border: '2px solid rgba(255, 255, 255, 0.1)',
-                    borderTop: '2px solid #fc8019',
-                    borderRadius: '50%',
-                    animation: 'spin 1s linear infinite'
-                  }} />
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
+                  <BikerLoader />
                   <span>Connecting to Swiggy App for confirmation...</span>
                 </div>
               </>
@@ -1824,15 +1855,8 @@ export const CustomerView: React.FC<CustomerViewProps> = ({ initialTable }) => {
                   </div>
                 </div>
 
-                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '8px', fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
-                  <div style={{
-                    width: '12px',
-                    height: '12px',
-                    border: '2px solid rgba(255, 255, 255, 0.1)',
-                    borderTop: '2px solid #cb202d',
-                    borderRadius: '50%',
-                    animation: 'spin 1s linear infinite'
-                  }} />
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
+                  <BikerLoader />
                   <span>Connecting to Zomato App for verification...</span>
                 </div>
               </>
@@ -1843,15 +1867,8 @@ export const CustomerView: React.FC<CustomerViewProps> = ({ initialTable }) => {
                   A waiter is coming to Table {tableNumber} to collect cash of <strong>₹{placedOrdersList.filter(o => o.status !== 'cancelled').reduce((sum, o) => sum + o.totalAmount, 0)}</strong>.
                 </p>
                 
-                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px', padding: '16px', backgroundColor: 'rgba(245,158,11,0.05)', border: '1px dashed var(--primary)', borderRadius: 'var(--radius-md)', marginBottom: '20px' }}>
-                  <div style={{
-                    width: '16px',
-                    height: '16px',
-                    border: '2px solid rgba(255, 255, 255, 0.1)',
-                    borderTop: '2px solid var(--primary)',
-                    borderRadius: '50%',
-                    animation: 'spin 1s linear infinite'
-                  }} />
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', padding: '16px', backgroundColor: 'rgba(245,158,11,0.05)', border: '1px dashed var(--primary)', borderRadius: 'var(--radius-md)', marginBottom: '20px' }}>
+                  <BikerLoader />
                   <span style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--primary)' }}>Waiting for Waiter payment verification...</span>
                 </div>
                 
