@@ -514,14 +514,21 @@ export const CustomerView: React.FC<CustomerViewProps> = ({ initialTable }) => {
       <AmbientBackground />
       {/* Top Header Bar */}
       <header className="glass-panel header-container" style={{ position: 'relative', zIndex: 10 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <img src="/logo.png" alt="Roadies Logo" style={{ height: '40px', objectFit: 'contain' }} />
-          <div style={{ textAlign: 'left' }}>
-            <h1 className="gradient-text header-title-text" style={{ fontSize: '1.05rem', margin: 0, lineHeight: 1.1 }}>
-              ROADIES KOFFEEHOUZ
-            </h1>
-            <p className="header-subtitle-text" style={{ margin: '2px 0 0 0' }}>Kharghar, Navi Mumbai</p>
-          </div>
+        <div style={{ textAlign: 'left' }}>
+          <h1 className="header-title-text" style={{ 
+            fontSize: '1.15rem', 
+            fontWeight: 900, 
+            letterSpacing: '1px', 
+            color: '#fff', 
+            textShadow: '0 0 8px rgba(245, 158, 11, 0.5)',
+            margin: 0,
+            textTransform: 'uppercase'
+          }}>
+            ROADIES <span style={{ color: 'var(--primary)' }}>KOFFEEHOUZ</span>
+          </h1>
+          <p className="header-subtitle-text" style={{ fontSize: '0.62rem', letterSpacing: '0.5px', color: 'var(--text-secondary)', margin: '1px 0 0 0' }}>
+            🏍️ GREAT RIDES • GOOD FOOD 🍳
+          </p>
         </div>
 
         <div className="header-right-actions">
