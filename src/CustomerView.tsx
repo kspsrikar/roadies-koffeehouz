@@ -1023,7 +1023,7 @@ export const CustomerView: React.FC<CustomerViewProps> = ({ initialTable }) => {
                         gap: '3px',
                         fontWeight: 600
                       }}>
-                        <Users size={10} /> {item.addedBy || 'Guest'}
+                        <Users size={10} /> {(item as any).addedBy || 'Guest'}
                       </span>
                     </div>
                     <span style={{ fontSize: '0.8rem', color: 'var(--primary)', fontWeight: 600 }}>₹{item.menuItem.price}</span>
@@ -1204,7 +1204,7 @@ export const CustomerView: React.FC<CustomerViewProps> = ({ initialTable }) => {
                     cursor: 'pointer'
                   }}
                   onClick={() => {
-                    setPlacedOrder(order);
+                    setPlacedOrderId(order.id);
                     setIsShowingActiveOrder(true);
                     setIsMyOrdersOpen(false);
                   }}

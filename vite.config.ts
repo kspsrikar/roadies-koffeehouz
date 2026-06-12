@@ -87,7 +87,7 @@ function dbSyncPlugin() {
                 const fast2smsUrl = `https://www.fast2sms.com/dev/bulkV2?authorization=${apiKey}&route=q&message=${encodeURIComponent(data.body)}&flash=0&numbers=${data.to}`;
                 fetch(fast2smsUrl)
                   .then(async (fastRes) => {
-                    const resJson = await fastRes.json();
+                    const resJson = await fastRes.json() as any;
                     if (resJson.return) {
                       console.log('🚀 [Fast2SMS Success] Real SMS dispatched successfully to Indian mobile carrier!');
                     } else {

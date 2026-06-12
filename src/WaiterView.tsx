@@ -486,7 +486,7 @@ export const WaiterView: React.FC = () => {
                           const gstVal = subtotal * 0.05;
                           return (
                             <>
-                              <div style={{ display: 'flex', justifycontent: 'space-between', marginTop: '8px', fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
+                              <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '8px', fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
                                 <span>Subtotal</span>
                                 <span>₹{subtotal}</span>
                               </div>
