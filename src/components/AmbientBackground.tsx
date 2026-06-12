@@ -6,6 +6,8 @@ interface MediaItem {
 }
 
 const DEFAULT_MEDIA: MediaItem[] = [
+  { type: 'video', url: 'https://rr2---sn-cvh76nle.googlevideo.com/videoplayback?expire=1781275320&ei=mP4raoDlNuG_4t4P5ZHNsAk&ip=2405:201:30:b817:7dea:bc36:9d10:fd8a&id=80f0d21982e10acb&itag=18&source=contrib_service_geo_ugc&begin=0&requiressl=yes&xpc=EghoqJzIP3oBAQ==&rms=su,su&sc=yes&susc=gugc&app=fife&ic=1061&eaua=GrKwNU3Tdck&pcm2=yes&mime=video/mp4&vprv=1&rqh=1&dur=9.520&lmt=1728676182181536&txp=0000224&sparams=expire,ei,ip,id,itag,source,requiressl,xpc,susc,app,ic,eaua,pcm2,mime,vprv,rqh,dur,lmt&sig=AHEqNM4wRgIhALDGfeMdd8X9RgLh6EMXFCld3QnM26RQJ9BrGU3hNkmwAiEAmyrpFobt3QA_4PisL8M0Me07l__EF6op1WWU42pzA9o=&redirect_counter=1&rm=sn-cvhsk7s&rrc=104&req_id=4a8910583ebba3ee&cms_redirect=yes&cmsv=e&ipbypass=yes&met=1781268121,&mh=JF&mip=49.36.101.216&mm=32&mn=sn-cvh76nle&ms=su&mt=1781267823&mv=m&mvi=2&pl=21&lsparams=ipbypass,met,mh,mip,mm,mn,ms,mv,mvi,pl,rms,sc&lsig=APaTxxMwRQIhAPk-IgD8G-cRsVCaMZWymBCtvH_8px3aUM7EST3glsw5AiAQUtBIuXX6z1aiO-Z2hImmRkAfLEbcsaqCF33c7H-OuA%3D%3D' },
+  { type: 'video', url: '/background.mp4' },
   { type: 'image', url: '/storefront.jpg' },
   { type: 'image', url: '/pizza.jpg' },
   { type: 'image', url: '/burgers.jpg' },
@@ -106,6 +108,13 @@ export const AmbientBackground: React.FC = () => {
                     setCurrentIndex((prev) => (prev + 1) % mediaList.length);
                     setFade(true);
                   }, 800);
+                }}
+                onError={() => {
+                  // If video fails to load (e.g. 404 because file is not pasted yet), filter it out
+                  setMediaList((prev) => prev.filter((m) => m.url !== item.url));
+                  if (currentIndex >= mediaList.length - 1) {
+                    setCurrentIndex(0);
+                  }
                 }}
                 style={{
                   width: '100%',
