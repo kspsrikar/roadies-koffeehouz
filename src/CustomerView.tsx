@@ -321,6 +321,88 @@ export const CustomerView: React.FC<CustomerViewProps> = ({ initialTable }) => {
 
 
 
+  if (!tableNumber) {
+    return (
+      <div key="table-select-screen" style={{
+        minHeight: '100vh',
+        backgroundColor: 'var(--bg-darkest)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '20px'
+      }}>
+        <div className="glass-panel animate-fade" style={{
+          maxWidth: '400px',
+          width: '100%',
+          borderRadius: 'var(--radius-lg)',
+          padding: '36px 30px',
+          border: '1px solid var(--border-color)',
+          textAlign: 'center',
+          boxShadow: '0 10px 30px rgba(0,0,0,0.5)'
+        }}>
+          <div style={{ 
+            width: '60px', 
+            height: '60px', 
+            backgroundColor: 'rgba(245, 158, 11, 0.1)', 
+            color: 'var(--primary)', 
+            borderRadius: '50%', 
+            display: 'inline-flex', 
+            alignItems: 'center', 
+            justifyContent: 'center',
+            marginBottom: '16px'
+          }}>
+            <ShoppingBag size={28} />
+          </div>
+          <h2 style={{ fontSize: '1.4rem', fontWeight: 800, marginBottom: '6px' }} className="gradient-text">
+            WELCOME TO ROADIES
+          </h2>
+          <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginBottom: '24px' }}>
+            Please select your table number to start ordering.
+          </p>
+
+          <form onSubmit={(e) => {
+            e.preventDefault();
+            const inputTable = (document.getElementById('table-number-input') as HTMLInputElement).value.trim();
+            if (inputTable) {
+              const time = new Date().toISOString();
+              sessionStorage.setItem('roadies_table_number', inputTable);
+              sessionStorage.setItem('roadies_session_start_time', time);
+              setTableNumber(inputTable);
+              setSessionStartTime(time);
+              setIsTableLocked(true);
+            }
+          }} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            <input
+              id="table-number-input"
+              type="text"
+              required
+              placeholder="e.g. 1, 2, 3..."
+              style={{
+                width: '100%',
+                backgroundColor: 'var(--bg-card)',
+                border: '1px solid var(--border-color)',
+                borderRadius: 'var(--radius-md)',
+                padding: '12px 14px',
+                color: 'white',
+                fontSize: '1rem',
+                textAlign: 'center'
+              }}
+              autoFocus
+            />
+
+            <button
+              type="submit"
+              className="btn btn-primary"
+              style={{ width: '100%', padding: '12px', borderRadius: 'var(--radius-md)', fontSize: '0.9rem', fontWeight: 700 }}
+            >
+              Select Table
+            </button>
+          </form>
+        </div>
+      </div>
+    );
+  }
+
   if (tableNumber && !guestName) {
     return (
       <div key="guest-name-screen" style={{
@@ -551,28 +633,7 @@ export const CustomerView: React.FC<CustomerViewProps> = ({ initialTable }) => {
 
       {/* Main Content Area */}
       <main className="container" style={{ flex: 1, padding: '24px 20px', paddingBottom: '100px', position: 'relative', zIndex: 10 }}>
-        {/* Browse Mode (Read-Only) Banner */}
-        {!tableNumber && (
-          <div className="glass-panel" style={{ 
-            borderRadius: 'var(--radius-lg)', 
-            padding: '16px 20px', 
-            marginBottom: '24px', 
-            borderLeft: '4px solid var(--primary)',
-            backgroundColor: 'rgba(217, 119, 6, 0.05)',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '12px',
-            animation: 'fadeIn 0.5s ease-out'
-          }}>
-            <AlertTriangle style={{ color: 'var(--primary)', flexShrink: 0 }} size={20} />
-            <div style={{ textAlign: 'left' }}>
-              <h4 style={{ fontSize: '0.9rem', margin: 0, fontWeight: 700, color: 'white' }}>Browse Mode (Read-Only)</h4>
-              <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', margin: '2px 0 0 0' }}>
-                Scan the QR code stand on your table to start adding items and placing orders.
-              </p>
-            </div>
-          </div>
-        )}
+
         {/* Placed Order Status banner */}
         {placedOrder && isShowingActiveOrder && (
           <div className="glass-panel" style={{ 
@@ -765,7 +826,6 @@ export const CustomerView: React.FC<CustomerViewProps> = ({ initialTable }) => {
                   onAdd={() => addToCart(item)}
                   onRemove={() => updateQuantity(item.id, -1)}
                   themeColor="var(--primary)"
-                  readOnly={!tableNumber}
                 />
               );
             })}
