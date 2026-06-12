@@ -226,16 +226,20 @@ export const KDSView: React.FC = () => {
                         className="btn btn-primary"
                         style={{
                           width: '100%',
-                          padding: '10px',
-                          borderRadius: '6px',
+                          padding: '12px',
+                          borderRadius: '8px',
                           cursor: 'pointer',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          gap: '6px'
+                          gap: '8px',
+                          fontSize: '0.85rem',
+                          fontWeight: 800,
+                          letterSpacing: '0.05em',
+                          textTransform: 'uppercase'
                         }}
                       >
-                        <CheckCircle2 size={16} /> Mark Ready
+                        <CheckCircle2 size={16} strokeWidth={2.5} /> Mark Ready
                       </button>
                     ) : (
                       <button
@@ -243,16 +247,20 @@ export const KDSView: React.FC = () => {
                         className="btn btn-primary"
                         style={{
                           width: '100%',
-                          padding: '10px',
-                          borderRadius: '6px',
+                          padding: '12px',
+                          borderRadius: '8px',
                           cursor: 'pointer',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          gap: '6px'
+                          gap: '8px',
+                          fontSize: '0.85rem',
+                          fontWeight: 800,
+                          letterSpacing: '0.05em',
+                          textTransform: 'uppercase'
                         }}
                       >
-                        <ChefHat size={16} /> Start Cooking
+                        <ChefHat size={16} strokeWidth={2.5} /> Start Cooking
                       </button>
                     )}
                   </div>
