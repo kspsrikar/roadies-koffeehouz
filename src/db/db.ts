@@ -298,10 +298,21 @@ export const saveTableAlerts = (alerts: TableAlert[]) => {
   syncAll();
 };
 
+const generateUUID = (): string => {
+  if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+    return crypto.randomUUID();
+  }
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    const r = Math.random() * 16 | 0;
+    const v = c === 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+};
+
 export const createTableAlert = (tableNumber: string, type: 'call_waiter' | 'request_bill'): TableAlert => {
   const alerts = getTableAlerts();
   const newAlert: TableAlert = {
-    id: 'ALT-' + Math.random().toString(36).substr(2, 9).toUpperCase(),
+    id: generateUUID(),
     tableNumber,
     type,
     createdAt: new Date().toISOString(),
@@ -316,6 +327,11 @@ export const dismissTableAlert = (alertId: string) => {
   const alerts = getTableAlerts();
   const updated = alerts.filter(a => a.id !== alertId);
   saveTableAlerts(updated);
+
+  if (isSupabaseConfigured && supabase) {
+    supabase.from('table_alerts').delete().eq('id', alertId)
+      .then(({ error }) => { if (error) console.error("Supabase alert delete error:", error); });
+  }
 };
 
 // Shared Carts helpers
@@ -411,13 +427,15 @@ const syncAll = () => {
     supabase.from('orders').upsert(ordersUploads)
       .then(({ error }) => { if (error) console.error("Supabase orders sync error:", error); });
 
-    const alertsUploads = payload.alerts.map(alert => ({
-      id: alert.id.includes('ALT') ? undefined : alert.id,
-      table_number: alert.tableNumber,
-      type: alert.type,
-      status: alert.status,
-      created_at: alert.createdAt
-    })).filter(a => a.id !== undefined);
+    const alertsUploads = payload.alerts
+      .filter(alert => !alert.id.startsWith('ALT'))
+      .map(alert => ({
+        id: alert.id,
+        table_number: alert.tableNumber,
+        type: alert.type,
+        status: alert.status,
+        created_at: alert.createdAt
+      }));
     
     if (alertsUploads.length > 0) {
       supabase.from('table_alerts').upsert(alertsUploads)

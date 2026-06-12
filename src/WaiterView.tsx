@@ -247,8 +247,18 @@ export const WaiterView: React.FC = () => {
            d.getFullYear() === today.getFullYear();
   };
 
-  const todayOrders = orders.filter(o => isToday(o.createdAt));
-  const todayAlerts = alerts.filter(a => isToday(a.createdAt));
+  const todayOrders = orders.filter(o => {
+    if (o.status === 'pending' || o.status === 'preparing' || o.status === 'ready') {
+      return true;
+    }
+    return isToday(o.createdAt);
+  });
+  const todayAlerts = alerts.filter(a => {
+    if (a.status === 'active') {
+      return true;
+    }
+    return isToday(a.createdAt);
+  });
 
   const filteredOrders = activeTab === 'all' 
     ? todayOrders 
