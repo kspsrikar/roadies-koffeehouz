@@ -555,7 +555,7 @@ export const CustomerView: React.FC<CustomerViewProps> = ({ initialTable }) => {
                 style={{
                   background: 'rgba(255, 255, 255, 0.1)',
                   border: '1px solid rgba(255, 255, 255, 0.15)',
-                  color: 'var(--primary)',
+                  color: '#ffffff',
                   fontSize: '0.65rem',
                   padding: '2px 8px',
                   borderRadius: '4px',
@@ -593,7 +593,7 @@ export const CustomerView: React.FC<CustomerViewProps> = ({ initialTable }) => {
               style={{ 
                 backgroundColor: 'var(--bg-card)', 
                 border: '1px solid var(--border-color)', 
-                color: 'var(--primary)', 
+                color: '#ffffff', 
                 width: '40px', 
                 height: '40px', 
                 borderRadius: 'var(--radius-full)', 
@@ -616,7 +616,7 @@ export const CustomerView: React.FC<CustomerViewProps> = ({ initialTable }) => {
               style={{ 
                 backgroundColor: 'var(--bg-card)', 
                 border: '1px solid var(--border-color)', 
-                color: 'var(--primary)', 
+                color: '#ffffff', 
                 width: '40px', 
                 height: '40px', 
                 borderRadius: 'var(--radius-full)', 
@@ -634,8 +634,8 @@ export const CustomerView: React.FC<CustomerViewProps> = ({ initialTable }) => {
                 position: 'absolute', 
                 top: '-4px', 
                 right: '-4px', 
-                backgroundColor: 'var(--primary)', 
-                color: 'var(--bg-darkest)', 
+                backgroundColor: '#ffffff', 
+                color: '#000000', 
                 fontSize: '0.65rem', 
                 fontWeight: 800, 
                 width: '18px', 
@@ -656,8 +656,8 @@ export const CustomerView: React.FC<CustomerViewProps> = ({ initialTable }) => {
               onClick={() => setIsCartOpen(true)}
               style={{ 
                 position: 'relative', 
-                backgroundColor: 'var(--primary)', 
-                color: 'var(--bg-darkest)', 
+                backgroundColor: '#ffffff', 
+                color: '#000000', 
                 width: '40px', 
                 height: '40px', 
                 borderRadius: 'var(--radius-full)', 
@@ -665,7 +665,7 @@ export const CustomerView: React.FC<CustomerViewProps> = ({ initialTable }) => {
                 alignItems: 'center', 
                 justifyContent: 'center',
                 cursor: 'pointer',
-                animation: 'pulseGlow 2s infinite'
+                boxShadow: '0 0 10px rgba(255, 255, 255, 0.25)'
               }}
             >
               <ShoppingBag size={18} />
@@ -846,8 +846,8 @@ export const CustomerView: React.FC<CustomerViewProps> = ({ initialTable }) => {
                 style={{
                   padding: '8px 16px',
                   borderRadius: 'var(--radius-full)',
-                  backgroundColor: isActive ? 'var(--primary)' : 'var(--bg-card)',
-                  color: isActive ? 'var(--bg-darkest)' : 'var(--text-primary)',
+                  backgroundColor: isActive ? '#ffffff' : 'var(--bg-card)',
+                  color: isActive ? '#000000' : 'var(--text-primary)',
                   fontWeight: 600,
                   fontSize: '0.85rem',
                   whiteSpace: 'nowrap',
