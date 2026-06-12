@@ -443,7 +443,7 @@ export const subscribeToDatabase = (
         const { data: ordersData } = await supabase.from('orders').select('*');
         const { data: alertsData } = await supabase.from('table_alerts').select('*');
 
-        if (menuData) {
+        if (menuData && menuData.length > 0) {
           const mapped = menuData.map((m: any) => ({
             id: m.id,
             name: m.name,
@@ -455,6 +455,20 @@ export const subscribeToDatabase = (
             image: m.image
           }));
           localStorage.setItem('roadies_menu', JSON.stringify(mapped));
+        } else if (menuData && menuData.length === 0) {
+          // Seed Supabase with default menu items if database is completely empty
+          const menuUploads = DEFAULT_MENU_ITEMS.map(item => ({
+            id: item.id,
+            name: item.name,
+            price: item.price,
+            category: item.category,
+            description: item.description,
+            popular: !!item.popular,
+            in_stock: item.inStock !== false,
+            image: item.image || null
+          }));
+          await supabase.from('menu_items').insert(menuUploads);
+          localStorage.setItem('roadies_menu', JSON.stringify(DEFAULT_MENU_ITEMS));
         }
 
         if (ordersData) {
