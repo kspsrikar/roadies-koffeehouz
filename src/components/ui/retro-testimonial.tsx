@@ -322,7 +322,7 @@ const TestimonialCard = ({
                   </span>
                 ) : cartQuantity > 0 ? (
                   <div 
-                    style={{ backgroundColor: itemColor }}
+                    style={{ backgroundColor: '#ffffff', boxShadow: '0 0 15px rgba(255, 255, 255, 0.4), 0 2px 4px rgba(0,0,0,0.2)' }}
                     className="flex items-center rounded-full p-1"
                   >
                     <button
@@ -330,11 +330,11 @@ const TestimonialCard = ({
                         e.stopPropagation();
                         onRemove();
                       }}
-                      className="h-10 w-10 text-black font-extrabold flex items-center justify-center cursor-pointer hover:scale-110 transition-transform"
+                      className="h-10 w-10 text-[#121214] font-extrabold flex items-center justify-center cursor-pointer hover:scale-110 transition-transform"
                     >
-                      <Minus size={16} />
+                      <Minus size={16} color="#121214" />
                     </button>
-                    <span className="font-black text-black px-4 min-w-[20px] text-center text-lg">
+                    <span className="font-black text-[#121214] px-4 min-w-[20px] text-center text-lg">
                       {cartQuantity}
                     </span>
                     <button
@@ -342,9 +342,9 @@ const TestimonialCard = ({
                         e.stopPropagation();
                         onAdd();
                       }}
-                      className="h-10 w-10 text-black font-extrabold flex items-center justify-center cursor-pointer hover:scale-110 transition-transform"
+                      className="h-10 w-10 text-[#121214] font-extrabold flex items-center justify-center cursor-pointer hover:scale-110 transition-transform"
                     >
-                      <Plus size={16} />
+                      <Plus size={16} color="#121214" />
                     </button>
                   </div>
                 ) : (
@@ -353,10 +353,10 @@ const TestimonialCard = ({
                       e.stopPropagation();
                       onAdd();
                     }}
-                    style={{ backgroundColor: itemColor }}
-                    className="px-6 py-3 rounded-full text-black font-black flex items-center gap-2 hover:scale-105 transition-all shadow-md cursor-pointer"
+                    style={{ backgroundColor: '#ffffff', color: '#121214', boxShadow: '0 0 15px rgba(255, 255, 255, 0.4), 0 2px 4px rgba(0,0,0,0.2)' }}
+                    className="px-6 py-3 rounded-full text-[#121214] font-black flex items-center gap-2 hover:scale-105 transition-all cursor-pointer"
                   >
-                    <ShoppingBag size={16} /> Add to Order
+                    <ShoppingBag size={16} color="#121214" /> Add to Order
                   </button>
                 )}
               </div>
@@ -452,22 +452,22 @@ const TestimonialCard = ({
               </span>
             ) : cartQuantity > 0 ? (
               <div 
-                style={{ backgroundColor: itemColor }}
+                style={{ backgroundColor: '#ffffff', boxShadow: '0 0 12px rgba(255, 255, 255, 0.45), 0 2px 4px rgba(0, 0, 0, 0.2)' }}
                 className="flex items-center rounded-full p-1"
                 onClick={(e) => e.stopPropagation()}
               >
                 <button
                   onClick={onRemove}
-                  className="h-9 w-9 text-black font-extrabold flex items-center justify-center cursor-pointer hover:scale-110 transition-transform"
+                  className="h-9 w-9 text-[#121214] font-extrabold flex items-center justify-center cursor-pointer hover:scale-110 transition-transform"
                 >
                   -
                 </button>
-                <span className="font-bold text-black px-3 text-base min-w-[14px] text-center">
+                <span className="font-bold text-[#121214] px-3 text-base min-w-[14px] text-center">
                   {cartQuantity}
                 </span>
                 <button
                   onClick={onAdd}
-                  className="h-9 w-9 text-black font-extrabold flex items-center justify-center cursor-pointer hover:scale-110 transition-transform"
+                  className="h-9 w-9 text-[#121214] font-extrabold flex items-center justify-center cursor-pointer hover:scale-110 transition-transform"
                 >
                   +
                 </button>
@@ -478,10 +478,10 @@ const TestimonialCard = ({
                   e.stopPropagation();
                   onAdd();
                 }}
-                style={{ backgroundColor: itemColor }}
-                className="h-10 w-10 rounded-full text-black font-black flex items-center justify-center hover:scale-110 transition-transform cursor-pointer"
+                style={{ backgroundColor: '#ffffff', boxShadow: '0 0 12px rgba(255, 255, 255, 0.45), 0 2px 4px rgba(0, 0, 0, 0.2)' }}
+                className="h-10 w-10 rounded-full text-[#121214] font-black flex items-center justify-center hover:scale-110 transition-transform cursor-pointer"
               >
-                <Plus size={18} />
+                <Plus size={18} color="#121214" />
               </button>
             )}
           </div>
