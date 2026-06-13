@@ -38,7 +38,7 @@ import { ContainerScroll } from './components/ui/container-scroll-animation';
 import { Carousel, TestimonialCard } from './components/ui/retro-testimonial';
 import { AmbientBackground } from './components/AmbientBackground';
 import { TextScramble } from './components/ui/text-scramble';
-import { AuroraButton } from '@/components/ui/aurora-button';
+import { Button } from '@/components/ui/neon-button';
 
 interface CustomerViewProps {
   initialTable?: string;
@@ -326,7 +326,7 @@ export const CustomerView: React.FC<CustomerViewProps> = ({ initialTable }) => {
           <p style={{ fontSize: '1.1rem', color: 'var(--text-secondary)', marginBottom: '30px', lineHeight: 1.6 }}>
             We received your payment successfully. We hope you loved dining with us at Roadies Koffeehouz. Please visit us again!
           </p>
-          <AuroraButton 
+          <Button 
             onClick={() => {
               // Return to menu while keeping session start time so previous bills remain visible
               setPlacedOrderId(null);
@@ -337,7 +337,7 @@ export const CustomerView: React.FC<CustomerViewProps> = ({ initialTable }) => {
             className="w-full py-3 mb-3 font-bold"
           >
             🍔 Order Again (Back to Menu)
-          </AuroraButton>
+          </Button>
           <button 
             onClick={() => {
               sessionStorage.removeItem('roadies_table_number');
@@ -429,12 +429,12 @@ export const CustomerView: React.FC<CustomerViewProps> = ({ initialTable }) => {
               autoFocus
             />
 
-            <AuroraButton
+            <Button
               type="submit"
               className="w-full py-3 text-sm font-bold"
             >
               Select Table
-            </AuroraButton>
+            </Button>
           </form>
         </div>
       </div>
@@ -504,12 +504,12 @@ export const CustomerView: React.FC<CustomerViewProps> = ({ initialTable }) => {
               autoFocus
             />
 
-            <AuroraButton
+            <Button
               type="submit"
               className="w-full py-3 text-sm font-bold"
             >
               Enter Dine-In Menu
-            </AuroraButton>
+            </Button>
           </form>
         </div>
       </div>

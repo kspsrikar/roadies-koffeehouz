@@ -1,19 +1,36 @@
-import { AuroraButton } from "@/components/ui/aurora-button";
+import { Button } from "@/components/ui/neon-button"
 
-function AuroraButtonDemo() {
-  return <AuroraButton>Click me</AuroraButton>;
+
+const Default = () => {
+    return (
+        <>
+            <div className="flex flex-col gap-3">
+                <Button>Button</Button>
+                <WithNoNeon />
+                <Solid />
+            </div>
+        </>
+    )
 }
 
-function AuroraButtonDemo2() {
-  return <AuroraButton className="px-6 py-3">Custom Size</AuroraButton>;
+const WithNoNeon = () => {
+    return (
+        <>
+            <div className="flex flex-col gap-2">
+                <Button neon={false}>normal button</Button>
+            </div>
+        </>
+    )
 }
 
-function AuroraButtonDemo3() {
-  return (
-    <AuroraButton glowClassName="from-pink-500 via-purple-500 to-blue-500">
-      Custom Gradient
-    </AuroraButton>
-  );
+const Solid = () => {
+    return (
+        <>
+            <div className="flex flex-col gap-2">
+                <Button variant={"solid"}>solid</Button>
+            </div>
+        </>
+    )
 }
 
-export { AuroraButtonDemo, AuroraButtonDemo2, AuroraButtonDemo3 };
+export { Default, WithNoNeon, Solid }

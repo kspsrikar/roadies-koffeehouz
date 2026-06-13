@@ -166,7 +166,7 @@ function App() {
   return <CustomerView />;
 }
 
-import { AuroraButton } from '@/components/ui/aurora-button';
+import { Button } from '@/components/ui/neon-button';
 
 // Security passcode component to lock staff/owner pages
 function PasscodeGuard({
@@ -283,12 +283,12 @@ function PasscodeGuard({
             </p>
           )}
 
-          <AuroraButton
+          <Button
             type="submit"
             className="w-full mt-2 py-3"
           >
             Authorize Access
-          </AuroraButton>
+          </Button>
         </form>
       </div>
     </div>
