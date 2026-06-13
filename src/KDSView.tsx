@@ -16,6 +16,7 @@ import {
   CookingPot,
   Sparkles
 } from 'lucide-react';
+import { Button } from '@/components/ui/neon-button';
 
 export const KDSView: React.FC = () => {
   const [orders, setOrders] = useState<Order[]>([]);
@@ -273,47 +274,21 @@ export const KDSView: React.FC = () => {
                   {/* Action Button */}
                   <div style={{ padding: '12px 16px', borderTop: '1px solid var(--border-color)', backgroundColor: 'var(--bg-darkest)' }}>
                     {isPreparing ? (
-                      <button
+                      <Button
                         onClick={() => handleStatusChange(order.id, 'ready')}
-                        className="btn btn-primary"
-                        style={{
-                          width: '100%',
-                          padding: '12px',
-                          borderRadius: '8px',
-                          cursor: 'pointer',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          gap: '8px',
-                          fontSize: '0.85rem',
-                          fontWeight: 800,
-                          letterSpacing: '0.05em',
-                          textTransform: 'uppercase'
-                        }}
+                        variant="solid"
+                        className="w-full py-3"
                       >
                         <CheckCircle2 size={16} strokeWidth={2.5} /> Mark Ready
-                      </button>
+                      </Button>
                     ) : (
-                      <button
+                      <Button
                         onClick={() => handleStatusChange(order.id, 'preparing')}
-                        className="btn btn-primary"
-                        style={{
-                          width: '100%',
-                          padding: '12px',
-                          borderRadius: '8px',
-                          cursor: 'pointer',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          gap: '8px',
-                          fontSize: '0.85rem',
-                          fontWeight: 800,
-                          letterSpacing: '0.05em',
-                          textTransform: 'uppercase'
-                        }}
+                        variant="solid"
+                        className="w-full py-3"
                       >
                         <ChefHat size={16} strokeWidth={2.5} /> Start Cooking
-                      </button>
+                      </Button>
                     )}
                   </div>
                 </div>
@@ -361,18 +336,12 @@ export const KDSView: React.FC = () => {
                   ))}
                 </div>
 
-                <button
+                <Button
                   onClick={() => handleStatusChange(order.id, 'served')}
-                  className="btn btn-secondary"
-                  style={{
-                    width: '100%',
-                    padding: '8px',
-                    fontSize: '0.75rem',
-                    borderRadius: '6px'
-                  }}
+                  className="w-full py-2 text-xs"
                 >
                   Recall & Mark Served
-                </button>
+                </Button>
               </div>
             ))}
 

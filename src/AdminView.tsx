@@ -24,6 +24,7 @@ import {
   Clock,
   AlertTriangle
 } from 'lucide-react';
+import { Button } from '@/components/ui/neon-button';
 
 export const AdminView: React.FC = () => {
   const [menu, setMenu] = useState<MenuItem[]>([]);
@@ -126,13 +127,12 @@ export const AdminView: React.FC = () => {
               </p>
             )}
 
-            <button
+            <Button
               type="submit"
-              className="btn btn-primary"
-              style={{ width: '100%', padding: '12px', borderRadius: 'var(--radius-md)', fontSize: '0.9rem', fontWeight: 700 }}
+              className="w-full py-3 text-sm font-bold"
             >
               Verify Pincode
-            </button>
+            </Button>
           </form>
         </div>
       </div>
@@ -759,22 +759,21 @@ export const AdminView: React.FC = () => {
 
                 <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
                   {isEditing && (
-                    <button 
+                    <Button 
                       type="button" 
                       onClick={resetForm}
-                      className="btn btn-secondary" 
-                      style={{ flex: 1, padding: '10px' }}
+                      className="flex-1 py-2"
                     >
                       Cancel
-                    </button>
+                    </Button>
                   )}
-                  <button 
+                  <Button 
                     type="submit" 
-                    className="btn btn-primary" 
-                    style={{ flex: 2, padding: '10px' }}
+                    variant="solid"
+                    className="flex-[2] py-2"
                   >
                     {isEditing ? 'Save Changes' : 'Create Item'}
-                  </button>
+                  </Button>
                 </div>
               </form>
             </div>

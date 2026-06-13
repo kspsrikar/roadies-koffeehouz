@@ -31,6 +31,7 @@ import {
   Volume2,
   Sliders
 } from 'lucide-react';
+import { Button } from '@/components/ui/neon-button';
 
 interface BuzzerConfig {
   enabled: boolean;
@@ -354,13 +355,13 @@ export const WaiterView: React.FC = () => {
                   ALERT: Table {alert.tableNumber} is requesting {alert.type === 'call_waiter' ? 'a Waiter' : 'the Bill'}!
                 </span>
               </div>
-              <button 
+              <Button 
                 onClick={() => handleDismissAlert(alert.id)}
-                className="btn btn-danger"
-                style={{ padding: '4px 10px', fontSize: '0.75rem', borderRadius: 'var(--radius-sm)' }}
+                variant="solid"
+                className="!bg-red-600 hover:!bg-red-700 !text-white text-xs px-3 py-1"
               >
                 Dismiss Alert
-              </button>
+              </Button>
             </div>
           ))}
         </div>
@@ -595,14 +596,13 @@ export const WaiterView: React.FC = () => {
                       <div style={{ display: 'flex', gap: '10px', justifyContent: 'space-between', alignItems: 'center' }}>
                         
                         {/* Left align: print KOT button */}
-                        <button 
+                        <Button 
                           onClick={() => handlePrintKOT(order)}
-                          className="btn btn-secondary"
-                          style={{ padding: '8px 12px', fontSize: '0.8rem', gap: '4px' }}
+                          className="px-4 py-1 text-xs flex items-center gap-1"
                           title="Print receipt ticket"
                         >
                           <Printer size={14} /> Print KOT
-                        </button>
+                        </Button>
 
                         {/* Right align: status modifications */}
                         <div style={{ display: 'flex', gap: '8px' }}>
@@ -636,53 +636,48 @@ export const WaiterView: React.FC = () => {
 
                           {order.status === 'pending' && (
                             <>
-                              <button 
+                              <Button 
                                 onClick={() => handleStatusChange(order.id, 'cancelled')}
-                                className="btn btn-secondary"
-                                style={{ padding: '8px 12px', fontSize: '0.8rem' }}
+                                className="px-4 py-1 text-xs flex items-center gap-1"
                               >
                                 <XCircle size={14} /> Decline
-                              </button>
-                              <button 
+                              </Button>
+                              <Button 
                                 onClick={() => handleStatusChange(order.id, 'preparing')}
-                                className="btn btn-primary"
-                                style={{ padding: '8px 14px', fontSize: '0.8rem' }}
+                                variant="solid"
+                                className="px-5 py-1 text-xs flex items-center gap-1"
                               >
                                 <ChefHat size={14} /> Prepare
-                              </button>
+                              </Button>
                             </>
                           )}
 
                           {order.status === 'preparing' && (
                             <>
-                              <button 
+                              <Button 
                                 onClick={() => handleStatusChange(order.id, 'ready')}
-                                className="btn btn-secondary"
-                                style={{ padding: '8px 12px', fontSize: '0.8rem' }}
+                                className="px-4 py-1 text-xs"
                               >
                                 Mark Ready
-                              </button>
-                              <button 
+                              </Button>
+                              <Button 
                                 onClick={() => handleStatusChange(order.id, 'served')}
-                                className="btn btn-primary"
-                                style={{ padding: '8px 16px', fontSize: '0.8rem' }}
+                                variant="solid"
+                                className="px-5 py-1 text-xs flex items-center gap-1"
                               >
                                 <CheckCircle size={14} /> Serve Order
-                              </button>
+                              </Button>
                             </>
                           )}
 
                           {order.status === 'ready' && (
-                            <button 
+                            <Button 
                               onClick={() => handleStatusChange(order.id, 'served')}
-                              className="btn btn-primary"
-                              style={{ 
-                                padding: '8px 16px', 
-                                fontSize: '0.8rem'
-                              }}
+                              variant="solid"
+                              className="px-5 py-1 text-xs flex items-center gap-1"
                             >
                               <CheckCircle size={14} /> Serve Order (Ready!)
-                            </button>
+                            </Button>
                           )}
 
                           {order.status === 'served' && (
