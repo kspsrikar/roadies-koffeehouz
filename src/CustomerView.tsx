@@ -38,6 +38,7 @@ import { ContainerScroll } from './components/ui/container-scroll-animation';
 import { Carousel, TestimonialCard } from './components/ui/retro-testimonial';
 import { AmbientBackground } from './components/AmbientBackground';
 import { TextScramble } from './components/ui/text-scramble';
+import { AuroraButton } from '@/components/ui/aurora-button';
 
 interface CustomerViewProps {
   initialTable?: string;
@@ -325,7 +326,7 @@ export const CustomerView: React.FC<CustomerViewProps> = ({ initialTable }) => {
           <p style={{ fontSize: '1.1rem', color: 'var(--text-secondary)', marginBottom: '30px', lineHeight: 1.6 }}>
             We received your payment successfully. We hope you loved dining with us at Roadies Koffeehouz. Please visit us again!
           </p>
-          <button 
+          <AuroraButton 
             onClick={() => {
               // Return to menu while keeping session start time so previous bills remain visible
               setPlacedOrderId(null);
@@ -333,11 +334,10 @@ export const CustomerView: React.FC<CustomerViewProps> = ({ initialTable }) => {
               setIsSettlingBillOpen(false);
               setBillPaymentMethod(null);
             }}
-            className="btn btn-primary"
-            style={{ width: '100%', padding: '12px', marginBottom: '12px', fontWeight: 700 }}
+            className="w-full py-3 mb-3 font-bold"
           >
             🍔 Order Again (Back to Menu)
-          </button>
+          </AuroraButton>
           <button 
             onClick={() => {
               sessionStorage.removeItem('roadies_table_number');
@@ -429,13 +429,12 @@ export const CustomerView: React.FC<CustomerViewProps> = ({ initialTable }) => {
               autoFocus
             />
 
-            <button
+            <AuroraButton
               type="submit"
-              className="btn btn-primary"
-              style={{ width: '100%', padding: '12px', borderRadius: 'var(--radius-md)', fontSize: '0.9rem', fontWeight: 700 }}
+              className="w-full py-3 text-sm font-bold"
             >
               Select Table
-            </button>
+            </AuroraButton>
           </form>
         </div>
       </div>
@@ -505,13 +504,12 @@ export const CustomerView: React.FC<CustomerViewProps> = ({ initialTable }) => {
               autoFocus
             />
 
-            <button
+            <AuroraButton
               type="submit"
-              className="btn btn-primary"
-              style={{ width: '100%', padding: '12px', borderRadius: 'var(--radius-md)', fontSize: '0.9rem', fontWeight: 700 }}
+              className="w-full py-3 text-sm font-bold"
             >
               Enter Dine-In Menu
-            </button>
+            </AuroraButton>
           </form>
         </div>
       </div>
