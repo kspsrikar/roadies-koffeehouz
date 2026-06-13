@@ -5,35 +5,35 @@
   --font-sans: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-serif: 'Playfair Display', Georgia, serif;
   
-  /* Modern Dark Premium Palette - Lighter Dark Shade (Anthracite / Charcoal Slate) */
-  --bg-darkest: #131317;
-  --bg-dark: #1b1b21;
-  --bg-card: #25252c;
-  --bg-card-hover: #31313a;
+  /* Modern Premium Jet Black & Slate Theme */
+  --bg-darkest: #070709;
+  --bg-dark: #0e0e12;
+  --bg-card: #15151c;
+  --bg-card-hover: #1f1f2a;
   
   --primary: #ffffff; /* Premium White */
   --primary-hover: #ffffff;
-  --primary-light: rgba(255, 255, 255, 0.12);
-  --primary-glow: rgba(255, 255, 255, 0.65); /* Increased glow intensity */
+  --primary-light: rgba(255, 255, 255, 0.06);
+  --primary-glow: rgba(255, 255, 255, 0.4);
   
-  --text-primary: #f8f8fa;
-  --text-secondary: #b4b4be;
-  --text-muted: #828290;
+  --text-primary: #fafafc;
+  --text-secondary: #a1a1b0;
+  --text-muted: #717180;
   
-  --border-color: #31313a;
-  --border-focus: #5d5d6c;
+  --border-color: rgba(255, 255, 255, 0.07);
+  --border-focus: rgba(255, 255, 255, 0.18);
   
   --success: #10b981;
-  --success-light: rgba(16, 185, 129, 0.1);
+  --success-light: rgba(16, 185, 129, 0.06);
   --warning: #f59e0b;
   --info: #3b82f6;
   --danger: #ef4444;
-  --danger-light: rgba(239, 68, 68, 0.1);
+  --danger-light: rgba(239, 68, 68, 0.06);
   
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
-  --shadow-glow: 0 0 20px rgba(255, 255, 255, 0.35), 0 0 8px rgba(255, 255, 255, 0.15);
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.6), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 25px rgba(255, 255, 255, 0.15);
   
   --radius-sm: 8px;
   --radius-md: 12px;
@@ -124,24 +124,24 @@ button, input, select {
 }
 
 .glass-panel {
-  background: rgba(43, 43, 52, 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05), 0 0 15px rgba(255, 255, 255, 0.06);
+  background: rgba(10, 10, 15, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.01), 0 0 15px rgba(255, 255, 255, 0.02);
   transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
 }
 
 .glass-panel-glow {
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 25px rgba(255, 255, 255, 0.12);
-  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 25px rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, #ffffff 10%, #d4d4d8 100%);
+  background: linear-gradient(135deg, #ffffff 10%, #a1a1aa 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 25px rgba(255, 255, 255, 0.35);
+  text-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
 }
 
 /* Buttons */
@@ -160,15 +160,36 @@ button, input, select {
 }
 
 .btn-primary {
-  background-color: var(--primary);
-  color: #121214;
-  box-shadow: 0 0 15px rgba(255, 255, 255, 0.25), 0 4px 12px rgba(0, 0, 0, 0.3);
+  position: relative;
+  background: rgba(9, 9, 11, 0.9) !important;
+  color: #fafafc !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6) !important;
+  z-index: 1;
+  overflow: visible;
+}
+
+.btn-primary::before {
+  content: "";
+  position: absolute;
+  inset: -1.5px;
+  border-radius: inherit;
+  background: linear-gradient(to right, #a855f7, #67e8f9, #34d399);
+  z-index: -1;
+  opacity: 0.65;
+  filter: blur(6px);
+  transition: all var(--transition-normal);
+}
+
+.btn-primary:hover::before {
+  opacity: 1;
+  filter: blur(10px);
 }
 
 .btn-primary:hover {
-  background-color: var(--primary-hover);
+  background: rgba(9, 9, 11, 0.75) !important;
   transform: translateY(-2px);
-  box-shadow: 0 0 25px rgba(255, 255, 255, 0.55), 0 0 12px rgba(255, 255, 255, 0.3), 0 6px 20px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7) !important;
 }
 
 .btn-primary:active {
@@ -176,16 +197,16 @@ button, input, select {
 }
 
 .btn-secondary {
-  background-color: var(--bg-card);
-  border: 1px solid var(--border-color);
+  background-color: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   color: var(--text-primary);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
 }
 
 .btn-secondary:hover {
-  background-color: var(--bg-card-hover);
-  border-color: var(--border-focus);
-  box-shadow: 0 0 12px rgba(255, 255, 255, 0.1), 0 4px 10px rgba(0, 0, 0, 0.2);
+  background-color: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
 }
 
 .btn-danger {

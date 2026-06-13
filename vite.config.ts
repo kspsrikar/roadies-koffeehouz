@@ -156,5 +156,10 @@ function dbSyncPlugin() {
 
 export default defineConfig({
   plugins: [tailwindcss(), react(), dbSyncPlugin()],
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+    },
+  },
 })
 

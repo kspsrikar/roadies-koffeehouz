@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { 
   getOrders, 
   updateOrderStatus, 
@@ -20,10 +20,62 @@ import {
 export const KDSView: React.FC = () => {
   const [orders, setOrders] = useState<Order[]>([]);
   const [activeTab, setActiveTab] = useState<'active' | 'ready'>('active');
+  const pendingCountRef = useRef(0);
+
+  const playAlertBuzzer = (durationSeconds: number = 3) => {
+    try {
+      const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+      if (!AudioContextClass) return;
+      const ctx = new AudioContextClass();
+      
+      const playBuzz = (start: number, duration: number) => {
+        const osc = ctx.createOscillator();
+        const filter = ctx.createBiquadFilter();
+        const gain = ctx.createGain();
+        
+        osc.connect(filter);
+        filter.connect(gain);
+        gain.connect(ctx.destination);
+        
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(140, ctx.currentTime + start);
+        
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(850, ctx.currentTime + start);
+
+        gain.gain.setValueAtTime(0.35, ctx.currentTime + start);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + start + duration);
+        
+        osc.start(ctx.currentTime + start);
+        osc.stop(ctx.currentTime + start + duration);
+      };
+
+      for (let i = 0; i < durationSeconds; i++) {
+        playBuzz(i * 1.0, 0.6);
+      }
+    } catch {
+      // Ignored
+    }
+  };
 
   useEffect(() => {
-    setOrders(getOrders());
+    const initialOrders = getOrders();
+    setOrders(initialOrders);
+    pendingCountRef.current = initialOrders.filter(o => o.status === 'pending').length;
+
     const unsubscribe = subscribeToDatabase((data) => {
+      const currentPendingCount = data.orders.filter(o => o.status === 'pending').length;
+      
+      const settings = JSON.parse(localStorage.getItem('roadies_buzzer_settings') || '{}');
+      const newOrderSetting = settings.newOrder || { enabled: true, duration: 3 };
+
+      if (currentPendingCount > pendingCountRef.current) {
+        if (newOrderSetting.enabled) {
+          playAlertBuzzer(newOrderSetting.duration);
+        }
+      }
+
+      pendingCountRef.current = currentPendingCount;
       setOrders(data.orders);
     });
     return () => unsubscribe();

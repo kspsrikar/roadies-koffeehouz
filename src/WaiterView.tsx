@@ -27,8 +27,21 @@ import {
   BellRing,
   Printer,
   DollarSign,
-  Search
+  Search,
+  Volume2,
+  Sliders
 } from 'lucide-react';
+
+interface BuzzerConfig {
+  enabled: boolean;
+  duration: number; // in seconds
+}
+
+interface BuzzerSettings {
+  newOrder: BuzzerConfig;
+  tableAlert: BuzzerConfig;
+  dishReady: BuzzerConfig;
+}
 
 export const WaiterView: React.FC = () => {
   const [orders, setOrders] = useState<Order[]>([]);
@@ -39,7 +52,7 @@ export const WaiterView: React.FC = () => {
   const [copiedLink, setCopiedLink] = useState(false);
   
   // Waiter view sub-tab and menu list states
-  const [waiterTab, setWaiterTab] = useState<'orders' | 'stock'>('orders');
+  const [waiterTab, setWaiterTab] = useState<'orders' | 'stock' | 'settings'>('orders');
   const [menu, setMenu] = useState<MenuItem[]>([]);
   const [stockSearch, setStockSearch] = useState('');
   const [selectedStockCategory, setSelectedStockCategory] = useState<string>('all');
@@ -47,8 +60,26 @@ export const WaiterView: React.FC = () => {
   // Store alert count in ref to avoid stale closures
   const alertsCountRef = useRef(0);
   const readyOrdersCountRef = useRef(0);
+  const ordersCountRef = useRef(0);
 
-  const playAlertBuzzer = () => {
+  const [buzzerSettings, setBuzzerSettings] = useState<BuzzerSettings>(() => {
+    try {
+      const saved = localStorage.getItem('roadies_buzzer_settings');
+      if (saved) return JSON.parse(saved);
+    } catch {}
+    return {
+      newOrder: { enabled: true, duration: 3 },
+      tableAlert: { enabled: true, duration: 5 },
+      dishReady: { enabled: true, duration: 3 }
+    };
+  });
+
+  const saveBuzzerSettings = (newSettings: BuzzerSettings) => {
+    setBuzzerSettings(newSettings);
+    localStorage.setItem('roadies_buzzer_settings', JSON.stringify(newSettings));
+  };
+
+  const playAlertBuzzer = (durationSeconds: number = 7) => {
     try {
       const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
       if (!AudioContextClass) return;
@@ -79,8 +110,8 @@ export const WaiterView: React.FC = () => {
         osc.stop(ctx.currentTime + start + duration);
       };
 
-      // Play repeating loud buzzer rhythm over 7 seconds (7 cycles of 1 second each)
-      for (let i = 0; i < 7; i++) {
+      // Play repeating loud buzzer rhythm based on durationSeconds
+      for (let i = 0; i < durationSeconds; i++) {
         playBuzz(i * 1.0, 0.6);
       }
     } catch {
@@ -97,6 +128,7 @@ export const WaiterView: React.FC = () => {
     setAlerts(initialAlerts);
     alertsCountRef.current = initialAlerts.length;
     readyOrdersCountRef.current = initialOrders.filter(o => o.status === 'ready').length;
+    ordersCountRef.current = initialOrders.length;
 
     if ('Notification' in window && Notification.permission === 'default') {
       Notification.requestPermission();
@@ -106,11 +138,32 @@ export const WaiterView: React.FC = () => {
       setOrders(data.orders);
       setMenu(data.menu);
       
+      const currentOrdersCount = data.orders.length;
       const currentReadyCount = data.orders.filter(o => o.status === 'ready').length;
+
+      // Load buzzer settings directly from localStorage to prevent state capture in closure
+      let settings = {
+        newOrder: { enabled: true, duration: 3 },
+        tableAlert: { enabled: true, duration: 5 },
+        dishReady: { enabled: true, duration: 3 }
+      };
+      try {
+        const saved = localStorage.getItem('roadies_buzzer_settings');
+        if (saved) settings = JSON.parse(saved);
+      } catch {}
+
+      // Trigger alerts on new order
+      if (currentOrdersCount > ordersCountRef.current) {
+        if (settings.newOrder.enabled) {
+          playAlertBuzzer(settings.newOrder.duration);
+        }
+      }
 
       // Trigger alerts on new call alert
       if (data.alerts.length > alertsCountRef.current) {
-        playAlertBuzzer();
+        if (settings.tableAlert.enabled) {
+          playAlertBuzzer(settings.tableAlert.duration);
+        }
         if ('Notification' in window && Notification.permission === 'granted') {
           new Notification("🔔 New Table Alert!", { body: `A table is requesting service!` });
         }
@@ -118,7 +171,9 @@ export const WaiterView: React.FC = () => {
 
       // Trigger alerts on kitchen ready transition
       if (currentReadyCount > readyOrdersCountRef.current) {
-        playAlertBuzzer();
+        if (settings.dishReady.enabled) {
+          playAlertBuzzer(settings.dishReady.duration);
+        }
         if ('Notification' in window && Notification.permission === 'granted') {
           new Notification("🍳 Dish Ready for Pick-up!", { body: `An order is ready to serve from the kitchen!` });
         }
@@ -126,6 +181,7 @@ export const WaiterView: React.FC = () => {
 
       alertsCountRef.current = data.alerts.length;
       readyOrdersCountRef.current = currentReadyCount;
+      ordersCountRef.current = currentOrdersCount;
       setAlerts(data.alerts);
     });
     return () => unsubscribe();
@@ -386,11 +442,33 @@ export const WaiterView: React.FC = () => {
                 boxShadow: waiterTab === 'stock' ? '0 0 15px rgba(255, 255, 255, 0.25)' : 'none'
               }}
             >
-              <ChefHat size={18} /> Menu Stock & Availability
+              <ChefHat size={18} /> Stock Control
+            </button>
+            <button
+              onClick={() => setWaiterTab('settings')}
+              style={{
+                flex: 1,
+                padding: '12px 20px',
+                borderRadius: 'var(--radius-md)',
+                backgroundColor: waiterTab === 'settings' ? 'var(--primary)' : 'var(--bg-card)',
+                color: waiterTab === 'settings' ? 'var(--bg-darkest)' : 'var(--text-primary)',
+                fontWeight: 700,
+                fontSize: '0.9rem',
+                cursor: 'pointer',
+                border: 'none',
+                transition: 'all 0.2s ease',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px',
+                boxShadow: waiterTab === 'settings' ? '0 0 15px rgba(255, 255, 255, 0.25)' : 'none'
+              }}
+            >
+              <Volume2 size={18} /> Buzzer Settings
             </button>
           </div>
 
-          {waiterTab === 'orders' ? (
+          {waiterTab === 'orders' && (
             <>
               {/* Status Tabs */}
               <div style={{ display: 'flex', gap: '8px', marginBottom: '20px', borderBottom: '1px solid var(--border-color)', paddingBottom: '12px', overflowX: 'auto' }}>
@@ -632,7 +710,9 @@ export const WaiterView: React.FC = () => {
                 )}
               </div>
             </>
-          ) : (
+          )}
+
+          {waiterTab === 'stock' && (
             <div className="glass-panel animate-fade" style={{ borderRadius: 'var(--radius-lg)', padding: '24px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', flexWrap: 'wrap', gap: '12px' }}>
                 <div>
@@ -791,6 +871,219 @@ export const WaiterView: React.FC = () => {
                     No menu items match search/filters.
                   </div>
                 )}
+              </div>
+            </div>
+          )}
+
+          {waiterTab === 'settings' && (
+            <div className="glass-panel" style={{ padding: '30px', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border-color)', animation: 'fadeIn 0.3s ease-out' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '24px' }}>
+                <div style={{ backgroundColor: 'var(--primary-light)', color: 'var(--primary)', padding: '10px', borderRadius: '10px' }}>
+                  <Volume2 size={24} />
+                </div>
+                <div>
+                  <h3 style={{ fontSize: '1.2rem', margin: 0, fontWeight: 800, color: 'var(--primary)', letterSpacing: '-0.3px' }}>Buzzer & Sound Settings</h3>
+                  <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', margin: 0 }}>Configure buzzer alerts and customize sound playtimes for staff actions.</p>
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+                
+                {/* 1. New Order Alert */}
+                <div style={{ padding: '20px', borderRadius: 'var(--radius-md)', backgroundColor: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                      <span style={{ fontSize: '1.2rem' }}>📦</span>
+                      <div>
+                        <strong style={{ display: 'block', fontSize: '0.95rem' }}>New Order Buzzer</strong>
+                        <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Triggers when a customer submits a new order</span>
+                      </div>
+                    </div>
+                    <label className="switch" style={{ position: 'relative', display: 'inline-block', width: '46px', height: '24px' }}>
+                      <input 
+                        type="checkbox" 
+                        checked={buzzerSettings.newOrder.enabled}
+                        onChange={(e) => saveBuzzerSettings({
+                          ...buzzerSettings,
+                          newOrder: { ...buzzerSettings.newOrder, enabled: e.target.checked }
+                        })}
+                        style={{ opacity: 0, width: 0, height: 0 }}
+                      />
+                      <span className="slider-toggle" style={{ 
+                        position: 'absolute', cursor: 'pointer', top: 0, left: 0, right: 0, bottom: 0, 
+                        backgroundColor: buzzerSettings.newOrder.enabled ? 'var(--primary)' : '#3f3f46', 
+                        transition: '0.3s', borderRadius: '34px',
+                        boxShadow: buzzerSettings.newOrder.enabled ? '0 0 10px rgba(255,255,255,0.2)' : 'none'
+                      }}>
+                        <span style={{
+                          position: 'absolute', content: '""', height: '18px', width: '18px', left: '3px', bottom: '3px',
+                          backgroundColor: buzzerSettings.newOrder.enabled ? 'var(--bg-darkest)' : 'white',
+                          transition: '0.3s', borderRadius: '50%',
+                          transform: buzzerSettings.newOrder.enabled ? 'translateX(22px)' : 'none'
+                        }} />
+                      </span>
+                    </label>
+                  </div>
+                  {buzzerSettings.newOrder.enabled && (
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                      <div style={{ flex: 1 }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', color: 'var(--text-secondary)', marginBottom: '8px' }}>
+                          <span>Buzzer Play Duration</span>
+                          <strong style={{ color: 'var(--primary)' }}>{buzzerSettings.newOrder.duration} seconds</strong>
+                        </div>
+                        <input 
+                          type="range" 
+                          min="1" 
+                          max="15" 
+                          value={buzzerSettings.newOrder.duration}
+                          onChange={(e) => saveBuzzerSettings({
+                            ...buzzerSettings,
+                            newOrder: { ...buzzerSettings.newOrder, duration: parseInt(e.target.value) }
+                          })}
+                          style={{ width: '100%', accentColor: 'var(--primary)', cursor: 'pointer' }}
+                        />
+                      </div>
+                      <button 
+                        onClick={() => playAlertBuzzer(buzzerSettings.newOrder.duration)}
+                        className="btn btn-outline"
+                        style={{ padding: '8px 16px', fontSize: '0.8rem', borderRadius: '8px', border: '1px solid var(--border-color)', color: 'var(--text-primary)', cursor: 'pointer', background: 'transparent' }}
+                      >
+                        🔊 Test
+                      </button>
+                    </div>
+                  )}
+                </div>
+
+                {/* 2. New Table Call / Bill Request */}
+                <div style={{ padding: '20px', borderRadius: 'var(--radius-md)', backgroundColor: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                      <span style={{ fontSize: '1.2rem' }}>🔔</span>
+                      <div>
+                        <strong style={{ display: 'block', fontSize: '0.95rem' }}>Table Assistance / Bill Request</strong>
+                        <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Triggers when a table calls the waiter or requests a bill</span>
+                      </div>
+                    </div>
+                    <label className="switch" style={{ position: 'relative', display: 'inline-block', width: '46px', height: '24px' }}>
+                      <input 
+                        type="checkbox" 
+                        checked={buzzerSettings.tableAlert.enabled}
+                        onChange={(e) => saveBuzzerSettings({
+                          ...buzzerSettings,
+                          tableAlert: { ...buzzerSettings.tableAlert, enabled: e.target.checked }
+                        })}
+                        style={{ opacity: 0, width: 0, height: 0 }}
+                      />
+                      <span className="slider-toggle" style={{ 
+                        position: 'absolute', cursor: 'pointer', top: 0, left: 0, right: 0, bottom: 0, 
+                        backgroundColor: buzzerSettings.tableAlert.enabled ? 'var(--primary)' : '#3f3f46', 
+                        transition: '0.3s', borderRadius: '34px',
+                        boxShadow: buzzerSettings.tableAlert.enabled ? '0 0 10px rgba(255,255,255,0.2)' : 'none'
+                      }}>
+                        <span style={{
+                          position: 'absolute', content: '""', height: '18px', width: '18px', left: '3px', bottom: '3px',
+                          backgroundColor: buzzerSettings.tableAlert.enabled ? 'var(--bg-darkest)' : 'white',
+                          transition: '0.3s', borderRadius: '50%',
+                          transform: buzzerSettings.tableAlert.enabled ? 'translateX(22px)' : 'none'
+                        }} />
+                      </span>
+                    </label>
+                  </div>
+                  {buzzerSettings.tableAlert.enabled && (
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                      <div style={{ flex: 1 }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', color: 'var(--text-secondary)', marginBottom: '8px' }}>
+                          <span>Buzzer Play Duration</span>
+                          <strong style={{ color: 'var(--primary)' }}>{buzzerSettings.tableAlert.duration} seconds</strong>
+                        </div>
+                        <input 
+                          type="range" 
+                          min="1" 
+                          max="15" 
+                          value={buzzerSettings.tableAlert.duration}
+                          onChange={(e) => saveBuzzerSettings({
+                            ...buzzerSettings,
+                            tableAlert: { ...buzzerSettings.tableAlert, duration: parseInt(e.target.value) }
+                          })}
+                          style={{ width: '100%', accentColor: 'var(--primary)', cursor: 'pointer' }}
+                        />
+                      </div>
+                      <button 
+                        onClick={() => playAlertBuzzer(buzzerSettings.tableAlert.duration)}
+                        className="btn btn-outline"
+                        style={{ padding: '8px 16px', fontSize: '0.8rem', borderRadius: '8px', border: '1px solid var(--border-color)', color: 'var(--text-primary)', cursor: 'pointer', background: 'transparent' }}
+                      >
+                        🔊 Test
+                      </button>
+                    </div>
+                  )}
+                </div>
+
+                {/* 3. Kitchen Ready Alert */}
+                <div style={{ padding: '20px', borderRadius: 'var(--radius-md)', backgroundColor: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                      <span style={{ fontSize: '1.2rem' }}>🍳</span>
+                      <div>
+                        <strong style={{ display: 'block', fontSize: '0.95rem' }}>Dish Ready Alert</strong>
+                        <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>Triggers when a chef marks an order as ready for pickup</span>
+                      </div>
+                    </div>
+                    <label className="switch" style={{ position: 'relative', display: 'inline-block', width: '46px', height: '24px' }}>
+                      <input 
+                        type="checkbox" 
+                        checked={buzzerSettings.dishReady.enabled}
+                        onChange={(e) => saveBuzzerSettings({
+                          ...buzzerSettings,
+                          dishReady: { ...buzzerSettings.dishReady, enabled: e.target.checked }
+                        })}
+                        style={{ opacity: 0, width: 0, height: 0 }}
+                      />
+                      <span className="slider-toggle" style={{ 
+                        position: 'absolute', cursor: 'pointer', top: 0, left: 0, right: 0, bottom: 0, 
+                        backgroundColor: buzzerSettings.dishReady.enabled ? 'var(--primary)' : '#3f3f46', 
+                        transition: '0.3s', borderRadius: '34px',
+                        boxShadow: buzzerSettings.dishReady.enabled ? '0 0 10px rgba(255,255,255,0.2)' : 'none'
+                      }}>
+                        <span style={{
+                          position: 'absolute', content: '""', height: '18px', width: '18px', left: '3px', bottom: '3px',
+                          backgroundColor: buzzerSettings.dishReady.enabled ? 'var(--bg-darkest)' : 'white',
+                          transition: '0.3s', borderRadius: '50%',
+                          transform: buzzerSettings.dishReady.enabled ? 'translateX(22px)' : 'none'
+                        }} />
+                      </span>
+                    </label>
+                  </div>
+                  {buzzerSettings.dishReady.enabled && (
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                      <div style={{ flex: 1 }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', color: 'var(--text-secondary)', marginBottom: '8px' }}>
+                          <span>Buzzer Play Duration</span>
+                          <strong style={{ color: 'var(--primary)' }}>{buzzerSettings.dishReady.duration} seconds</strong>
+                        </div>
+                        <input 
+                          type="range" 
+                          min="1" 
+                          max="15" 
+                          value={buzzerSettings.dishReady.duration}
+                          onChange={(e) => saveBuzzerSettings({
+                            ...buzzerSettings,
+                            dishReady: { ...buzzerSettings.dishReady, duration: parseInt(e.target.value) }
+                          })}
+                          style={{ width: '100%', accentColor: 'var(--primary)', cursor: 'pointer' }}
+                        />
+                      </div>
+                      <button 
+                        onClick={() => playAlertBuzzer(buzzerSettings.dishReady.duration)}
+                        className="btn btn-outline"
+                        style={{ padding: '8px 16px', fontSize: '0.8rem', borderRadius: '8px', border: '1px solid var(--border-color)', color: 'var(--text-primary)', cursor: 'pointer', background: 'transparent' }}
+                      >
+                        🔊 Test
+                      </button>
+                    </div>
+                  )}
+                </div>
+
               </div>
             </div>
           )}

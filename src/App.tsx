@@ -166,6 +166,8 @@ function App() {
   return <CustomerView />;
 }
 
+import { AuroraButton } from '@/components/ui/aurora-button';
+
 // Security passcode component to lock staff/owner pages
 function PasscodeGuard({
   targetPasscode,
@@ -250,7 +252,7 @@ function PasscodeGuard({
         <p style={{ fontSize: '0.85rem', color: '#a1a1aa', marginBottom: '24px' }}>
           Enter staff passcode to unlock this panel.
         </p>
-
+ 
         <form onSubmit={handleUnlock} style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
           <input
             type="password"
@@ -281,18 +283,12 @@ function PasscodeGuard({
             </p>
           )}
 
-          <button
+          <AuroraButton
             type="submit"
-            className="btn btn-primary"
-            style={{
-              width: '100%',
-              padding: '12px',
-              fontSize: '0.9rem',
-              marginTop: '8px'
-            }}
+            className="w-full mt-2 py-3"
           >
             Authorize Access
-          </button>
+          </AuroraButton>
         </form>
       </div>
     </div>
