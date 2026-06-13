@@ -932,23 +932,21 @@ export const CustomerView: React.FC<CustomerViewProps> = ({ initialTable }) => {
             
             {placedOrder.status === 'served' ? (
               <div style={{ marginTop: '20px', textAlign: 'center' }}>
-                <button 
+                <Button 
                   onClick={() => setPlacedOrderId(null)} 
-                  className="btn btn-secondary" 
-                  style={{ width: '100%', fontSize: '0.85rem' }}
+                  className="w-full text-sm font-semibold"
                 >
                   Order Received - Back to Menu
-                </button>
+                </Button>
               </div>
             ) : (
               <div style={{ marginTop: '20px', textAlign: 'center' }}>
-                <button 
+                <Button 
                   onClick={() => setPlacedOrderId(null)} 
-                  className="btn btn-secondary" 
-                  style={{ width: '100%', fontSize: '0.85rem', backgroundColor: 'transparent', borderColor: 'var(--border-color)' }}
+                  className="w-full text-sm font-semibold"
                 >
                   Order Running - View Menu
-                </button>
+                </Button>
               </div>
             )}
           </div>
@@ -1005,31 +1003,30 @@ export const CustomerView: React.FC<CustomerViewProps> = ({ initialTable }) => {
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                     <span className={`badge badge-${latestOrder.status}`} style={{ fontSize: '0.65rem' }}>{latestOrder.status}</span>
-                    <button 
+                    <Button 
                       onClick={() => {
                         setPlacedOrderId(latestOrder.id);
                         setIsShowingActiveOrder(true);
                         // Scroll up to order tracker
                         window.scrollTo({ top: 0, behavior: 'smooth' });
                       }}
-                      className="btn btn-secondary" 
-                      style={{ padding: '6px 12px', fontSize: '0.7rem', border: '1px solid var(--border-color)' }}
+                      className="px-4 py-1 text-xs"
                     >
                       Track Status
-                    </button>
+                    </Button>
                   </div>
                 </div>
               );
             })()}
 
             <div style={{ display: 'flex', gap: '10px', marginTop: '4px' }}>
-              <button 
+              <Button 
                 onClick={() => setIsMyOrdersOpen(true)}
-                className="btn btn-primary"
-                style={{ flex: 1, padding: '10px', fontSize: '0.8rem', borderRadius: 'var(--radius-md)' }}
+                variant="solid"
+                className="w-full py-2.5 text-sm"
               >
                 View Bill & Pay status
-              </button>
+              </Button>
             </div>
           </div>
         )}
@@ -1335,13 +1332,13 @@ export const CustomerView: React.FC<CustomerViewProps> = ({ initialTable }) => {
                   </p>
                 </div>
 
-                <button 
+                <Button 
                   type="submit" 
-                  className="btn btn-primary" 
-                  style={{ width: '100%', padding: '14px', borderRadius: 'var(--radius-md)' }}
+                  variant="solid"
+                  className="w-full py-3.5 text-sm font-bold"
                 >
                   Send Order to Waiter • ₹{Math.round(cartTotal * 1.05)}
-                </button>
+                </Button>
               </form>
             )}
           </div>
@@ -1469,17 +1466,17 @@ export const CustomerView: React.FC<CustomerViewProps> = ({ initialTable }) => {
                   </div>
 
                   {unpaidActiveOrders.length > 0 ? (
-                    <button 
+                    <Button 
                       onClick={() => {
                         setIsSettlingBillOpen(true);
                         setBillPaymentMethod(null);
                         setIsMyOrdersOpen(false);
                       }}
-                      className="btn btn-primary"
-                      style={{ width: '100%', padding: '14px', borderRadius: 'var(--radius-md)', marginTop: '10px' }}
+                      variant="solid"
+                      className="w-full py-3 text-sm font-bold mt-2"
                     >
                       💳 Pay Bill • ₹{combinedGrandTotal}
-                    </button>
+                    </Button>
                   ) : (
                     <p style={{ fontSize: '0.85rem', color: 'var(--success)', textAlign: 'center', marginTop: '12px', fontWeight: 600 }}>
                       ✔ All orders paid. Thank you!
@@ -1546,32 +1543,31 @@ export const CustomerView: React.FC<CustomerViewProps> = ({ initialTable }) => {
                   Select an option below to notify the service staff at Table {tableNumber} immediately.
                 </p>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                  <button 
+                  <Button 
                     onClick={() => {
                       createTableAlert(tableNumber, 'call_waiter');
                       setBellAlertSent(true);
                     }}
-                    className="btn btn-primary"
-                    style={{ width: '100%', padding: '12px' }}
+                    variant="solid"
+                    className="w-full py-2.5 text-sm"
                   >
                     🙋‍♂️ Call a Waiter
-                  </button>
-                  <button 
+                  </Button>
+                  <Button 
                     onClick={() => {
                       createTableAlert(tableNumber, 'request_bill');
                       setBellAlertSent(true);
                     }}
-                    className="btn btn-secondary"
-                    style={{ width: '100%', padding: '12px' }}
+                    className="w-full py-2.5 text-sm"
                   >
                     💳 Request the Bill
-                  </button>
-                  <button 
+                  </Button>
+                  <Button 
                     onClick={() => setIsServiceBellOpen(false)}
-                    style={{ fontSize: '0.8rem', color: 'var(--text-muted)', cursor: 'pointer', marginTop: '8px' }}
+                    className="w-full py-2 text-xs border-transparent hover:border-transparent bg-transparent hover:bg-transparent"
                   >
                     Cancel
-                  </button>
+                  </Button>
                 </div>
               </>
             ) : (
@@ -1580,13 +1576,12 @@ export const CustomerView: React.FC<CustomerViewProps> = ({ initialTable }) => {
                 <p style={{ fontSize: '0.85rem', color: 'var(--success)', marginBottom: '24px', fontWeight: 600 }}>
                   ✔ A waiter has been alerted and is heading to Table {tableNumber}.
                 </p>
-                <button 
+                <Button 
                   onClick={() => setIsServiceBellOpen(false)}
-                  className="btn btn-secondary"
-                  style={{ width: '100%' }}
+                  className="w-full py-2 text-sm"
                 >
                   Back to Menu
-                </button>
+                </Button>
               </>
             )}
           </div>
@@ -1683,7 +1678,7 @@ export const CustomerView: React.FC<CustomerViewProps> = ({ initialTable }) => {
                       Choose how you would like to settle your total bill of <strong>₹{placedOrdersList.filter(o => o.status !== 'cancelled').reduce((sum, o) => sum + o.totalAmount, 0)}</strong> (incl. 5% GST).
                     </p>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                      <button 
+                      <Button 
                         onClick={() => {
                           const tableOrders = placedOrdersList.filter(o => o.status !== 'cancelled');
                           const totalAmt = tableOrders.reduce((sum, o) => sum + o.totalAmount, 0);
@@ -1695,12 +1690,12 @@ export const CustomerView: React.FC<CustomerViewProps> = ({ initialTable }) => {
                             setPendingPaymentAction(null);
                           });
                         }}
-                        className="btn btn-primary"
-                        style={{ width: '100%', padding: '12px' }}
+                        variant="solid"
+                        className="w-full py-2.5 text-sm"
                       >
                         📲 Pay Online (UPI QR)
-                      </button>
-                      <button 
+                      </Button>
+                      <Button 
                         onClick={() => {
                           setBillPaymentMethod('card');
                           setTimeout(() => {
@@ -1709,12 +1704,11 @@ export const CustomerView: React.FC<CustomerViewProps> = ({ initialTable }) => {
                             setHasCompletedDining(true);
                           }, 4000);
                         }}
-                        className="btn btn-secondary"
-                        style={{ width: '100%', padding: '12px' }}
+                        className="w-full py-2.5 text-sm"
                       >
                         💳 Pay via Credit/Debit Card
-                      </button>
-                      <button 
+                      </Button>
+                      <Button 
                         onClick={() => {
                           setBillPaymentMethod('swiggy');
                           setTimeout(() => {
@@ -1723,12 +1717,11 @@ export const CustomerView: React.FC<CustomerViewProps> = ({ initialTable }) => {
                             setHasCompletedDining(true);
                           }, 4000);
                         }}
-                        className="btn btn-secondary"
-                        style={{ width: '100%', padding: '12px', backgroundColor: 'rgba(252, 128, 25, 0.15)', borderColor: '#fc8019', color: '#fc8019' }}
+                        className="w-full py-2.5 text-sm !bg-[rgba(252,128,25,0.15)] !border-[#fc8019] !text-[#fc8019]"
                       >
                         🍊 Pay via Swiggy Dineout
-                      </button>
-                      <button 
+                      </Button>
+                      <Button 
                         onClick={() => {
                           setBillPaymentMethod('zomato');
                           setTimeout(() => {
@@ -1737,21 +1730,19 @@ export const CustomerView: React.FC<CustomerViewProps> = ({ initialTable }) => {
                             setHasCompletedDining(true);
                           }, 4000);
                         }}
-                        className="btn btn-secondary"
-                        style={{ width: '100%', padding: '12px', backgroundColor: 'rgba(203, 32, 45, 0.15)', borderColor: '#cb202d', color: '#cb202d' }}
+                        className="w-full py-2.5 text-sm !bg-[rgba(203,32,45,0.15)] !border-[#cb202d] !text-[#cb202d]"
                       >
                         🔴 Pay via Zomato Gold
-                      </button>
-                      <button 
+                      </Button>
+                      <Button 
                         onClick={() => {
                           setBillPaymentMethod('cash');
                           createTableAlert(tableNumber, 'request_bill');
                         }}
-                        className="btn btn-secondary"
-                        style={{ width: '100%', padding: '12px' }}
+                        className="w-full py-2.5 text-sm"
                       >
                         💵 Pay Cash to Waiter
-                      </button>
+                      </Button>
                     </div>
                   </>
                 ) : (
@@ -1883,7 +1874,7 @@ export const CustomerView: React.FC<CustomerViewProps> = ({ initialTable }) => {
 
                     {/* Pay Share Actions */}
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                      <button
+                      <Button
                         type="button"
                         onClick={() => {
                           // Calculate share amount
@@ -1926,33 +1917,32 @@ export const CustomerView: React.FC<CustomerViewProps> = ({ initialTable }) => {
                             setPendingPaymentAction(null);
                           });
                         }}
-                        className="btn btn-primary"
-                        style={{ width: '100%', padding: '12px', fontWeight: 700 }}
+                        variant="solid"
+                        className="w-full py-2.5 text-sm"
                       >
                         📲 Pay My Share Online (UPI/QR)
-                      </button>
-                      <button
+                      </Button>
+                      <Button
                         type="button"
                         onClick={() => {
                           setBillPaymentMethod('cash');
                           createTableAlert(tableNumber, 'request_bill');
                         }}
-                        className="btn btn-secondary"
-                        style={{ width: '100%', padding: '12px' }}
+                        className="w-full py-2.5 text-sm"
                       >
                         💵 Request Waiter to Collect Share
-                      </button>
+                      </Button>
                     </div>
                   </>
                 )}
 
-                <button 
+                <Button 
                   type="button"
                   onClick={() => setIsSettlingBillOpen(false)}
-                  style={{ fontSize: '0.8rem', color: 'var(--text-muted)', cursor: 'pointer', marginTop: '14px', border: 'none', background: 'none' }}
+                  className="w-full py-2 text-xs border-transparent hover:border-transparent bg-transparent hover:bg-transparent mt-2"
                 >
                   Cancel
-                </button>
+                </Button>
               </>
             ) : billPaymentMethod === 'paytm' ? (
               <>
@@ -1980,17 +1970,17 @@ export const CustomerView: React.FC<CustomerViewProps> = ({ initialTable }) => {
                   <span>Waiting for payment...</span>
                 </div>
 
-                <button
+                <Button
                   onClick={() => {
                     if (pendingPaymentAction) {
                       pendingPaymentAction();
                     }
                   }}
-                  className="btn btn-primary"
-                  style={{ width: '100%', marginTop: '20px', padding: '12px', fontWeight: 700 }}
+                  variant="solid"
+                  className="w-full mt-5 py-3"
                 >
                   I Have Paid / Confirm Payment
-                </button>
+                </Button>
               </>
             ) : billPaymentMethod === 'card' ? (
               <>
@@ -2086,13 +2076,12 @@ export const CustomerView: React.FC<CustomerViewProps> = ({ initialTable }) => {
                   * Once the waiter marks your order as Paid on their terminal, this screen will update automatically.
                 </p>
                 
-                <button 
+                <Button 
                   onClick={() => setIsSettlingBillOpen(false)}
-                  className="btn btn-secondary"
-                  style={{ width: '100%', marginTop: '16px' }}
+                  className="w-full mt-4 py-2.5 text-sm"
                 >
                   Close & View Menu
-                </button>
+                </Button>
               </>
             )}
           </div>
