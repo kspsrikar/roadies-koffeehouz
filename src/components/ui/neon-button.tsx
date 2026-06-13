@@ -12,9 +12,9 @@ const buttonVariants = cva(
                 ghost: "border-transparent bg-transparent hover:border-zinc-600 hover:bg-white/10",
             },
             size: {
-                default: "px-7 py-1.5 ",
-                sm: "px-4 py-0.5 ",
-                lg: "px-10 py-2.5 ",
+                default: "px-7 py-3 ",
+                sm: "px-4 py-1.5 ",
+                lg: "px-10 py-4 ",
             },
         },
         defaultVariants: {
