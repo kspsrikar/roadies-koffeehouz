@@ -3,6 +3,7 @@ import { CustomerView } from './CustomerView';
 import { WaiterView } from './WaiterView';
 import { AdminView } from './AdminView';
 import { KDSView } from './KDSView';
+import { AmbientBackground } from './components/AmbientBackground';
 
 // Set to true to enable maintenance mode across the application
 // Triggering fresh rebuild on Vercel
@@ -209,35 +210,24 @@ function PasscodeGuard({
       alignItems: 'center',
       justifyContent: 'center',
       minHeight: '100vh',
-      backgroundColor: 'var(--bg-darkest)',
+      backgroundColor: 'transparent',
       color: 'var(--text-primary)',
       fontFamily: 'var(--font-sans)',
       padding: '24px',
       textAlign: 'center',
       position: 'relative'
     }}>
-      {/* Background glow */}
-      <div style={{
-        position: 'absolute',
-        width: '350px',
-        height: '350px',
-        background: 'radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, rgba(0,0,0,0) 70%)',
-        filter: 'blur(30px)',
-        zIndex: 1,
-        pointerEvents: 'none'
-      }} />
+      <AmbientBackground />
 
-      <div style={{
+      <div className="glass-panel" style={{
         position: 'relative',
         zIndex: 2,
         maxWidth: '400px',
         width: '100%',
-        background: 'rgba(43, 43, 52, 0.75)',
-        backdropFilter: 'blur(12px)',
+        borderRadius: 'var(--radius-lg)',
+        padding: '36px 30px',
         border: '1px solid var(--border-color)',
-        borderRadius: '20px',
-        padding: '36px 24px',
-        boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.5)'
+        boxShadow: '0 10px 30px rgba(0,0,0,0.5)'
       }}>
         <div style={{
           fontSize: '36px',

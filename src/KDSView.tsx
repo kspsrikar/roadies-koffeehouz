@@ -132,9 +132,7 @@ export const KDSView: React.FC = () => {
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: 'var(--bg-darkest)', color: 'var(--text-primary)', fontFamily: 'var(--font-sans)' }}>
       
       {/* KDS Header */}
-      <header style={{ 
-        backgroundColor: 'var(--bg-dark)', 
-        borderBottom: '1px solid var(--border-color)',
+      <header className="glass-panel" style={{ 
         padding: '16px 24px', 
         display: 'flex', 
         justifyContent: 'space-between', 
